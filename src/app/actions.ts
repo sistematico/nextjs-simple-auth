@@ -6,9 +6,9 @@ import { signInSchema, signUpSchema } from "@/schemas/auth";
 import { db } from "@/db";
 import { UserTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { comparePasswords, generateSalt, hashPassword } from "../core/passwordHasher";
+import { comparePasswords, generateSalt, hashPassword } from "@/auth/password";
 import { cookies } from "next/headers";
-import { createUserSession, removeUserFromSession } from "../core/session";
+import { createUserSession, removeUserFromSession } from "@/auth/session";
 
 export async function signIn(unsafeData: z.infer<typeof signInSchema>) {
   const { success, data } = signInSchema.safeParse(unsafeData);

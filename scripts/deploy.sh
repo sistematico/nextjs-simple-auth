@@ -2,15 +2,10 @@
 
 PATH=$PATH:/home/nginx/.bun/bin
 
-if [ -f .env.production ] && [ ! -f .env ]; then 
-    cp .env.production /tmp/env.lucasbrum
-fi
-
+[ -f .env.production ] && cp .env.production /tmp/env.auth.lucasbrum
 git clean -fxd
-
-[ -f /tmp/env.lucasbrum ] && cp /tmp/env.lucasbrum .env.production
-
-sudo /usr/bin/systemctl stop lucasbrum
+[ -f /tmp/env.auth.lucasbrum ] && cp /tmp/env.auth.lucasbrum .env.production
+sudo /usr/bin/systemctl stop auth.lucasbrum.dev.service
 bun install
 bun run build
-sudo /usr/bin/systemctl start lucasbrum
+sudo /usr/bin/systemctl start auth.lucasbrum.dev.service
