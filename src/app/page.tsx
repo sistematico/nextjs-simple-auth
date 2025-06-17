@@ -1,6 +1,10 @@
+import Link from "next/link";
 import Image from "next/image";
+import { getCurrentUser } from "@/auth/user";
 
-export default function Home() {
+export default async function Home() {
+  const fullUser = await getCurrentUser({ withFullUser: true });
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -26,11 +30,9 @@ export default function Home() {
         </ol>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
+          <Link
             className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/cadastro"
           >
             <Image
               className="dark:invert"
@@ -39,15 +41,13 @@ export default function Home() {
               width={20}
               height={20}
             />
-            Deploy now
-          </a>
+            Cadastro
+          </Link>
           <a
             className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/entrar"
           >
-            Read our docs
+            Entrar
           </a>
         </div>
       </main>
@@ -101,3 +101,52 @@ export default function Home() {
     </div>
   );
 }
+
+// import { LogOutButton } from "@/auth/nextjs/components/LogOutButton";
+// import { getCurrentUser } from "@/auth/nextjs/currentUser";
+// import { Button } from "@/components/ui/button";
+// import {
+//   Card,
+//   CardDescription,
+//   CardFooter,
+//   CardHeader,
+//   CardTitle,
+// } from "@/components/ui/card";
+// import Link from "next/link";
+
+// export default async function HomePage() {
+//   const fullUser = await getCurrentUser({ withFullUser: true });
+
+//   return (
+//     <div className="container mx-auto p-4">
+//       {fullUser == null ? (
+//         <div className="flex gap-4">
+//           <Button asChild>
+//             <Link href="/sign-in">Sign In</Link>
+//           </Button>
+//           <Button asChild>
+//             <Link href="/sign-up">Sign Up</Link>
+//           </Button>
+//         </div>
+//       ) : (
+//         <Card className="max-w-[500px] mt-4">
+//           <CardHeader>
+//             <CardTitle>User: {fullUser.name}</CardTitle>
+//             <CardDescription>Role: {fullUser.role}</CardDescription>
+//           </CardHeader>
+//           <CardFooter className="flex gap-4">
+//             <Button asChild variant="outline">
+//               <Link href="/private">Private Page</Link>
+//             </Button>
+//             {fullUser.role === "admin" && (
+//               <Button asChild variant="outline">
+//                 <Link href="/admin">Admin Page</Link>
+//               </Button>
+//             )}
+//             <LogOutButton />
+//           </CardFooter>
+//         </Card>
+//       )}
+//     </div>
+//   );
+// }
