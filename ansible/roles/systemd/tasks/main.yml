@@ -6,9 +6,7 @@
     group: root
     mode: "0644"
   with_items:
-    - agrocomm.service
-    - agrocomm-scrape.service
-    - agrocomm-scrape.timer
+    - auth.lucasbrum.dev.service
 
 - name: Creates /etc/sudoers.d directory
   ansible.builtin.file:
@@ -18,21 +16,16 @@
 
 - name: >-
     Habilitar o usuario nginx para rodar:
-    sudo /usr/bin/systemctl restart|stop|start|status agrocomm,
+    sudo /usr/bin/systemctl restart|stop|start|status auth.lucasbrum.dev,
     sem necessidade de senha
   community.general.sudoers:
-    name: agrocomm
+    name: auth.lucasbrum.dev
     user: nginx
     commands:
-      - /usr/bin/systemctl stop agrocomm
-      - /usr/bin/systemctl start agrocomm
-      - /usr/bin/systemctl restart agrocomm
-      - /usr/bin/systemctl status agrocomm
-      - /usr/bin/systemctl status agrocomm-scrape.service
-      - /usr/bin/systemctl start agrocomm-scrape.service
-      - /usr/bin/systemctl stop agrocomm-scrape.service
-      - /usr/bin/systemctl restart agrocomm-scrape.service
-      - /usr/bin/systemctl restart agrocomm-scrape.timer
+      - /usr/bin/systemctl stop auth.lucasbrum.dev
+      - /usr/bin/systemctl start auth.lucasbrum.dev
+      - /usr/bin/systemctl restart auth.lucasbrum.dev
+      - /usr/bin/systemctl status auth.lucasbrum.dev
     nopassword: true
 
 - name: Reiniciar as unidades do systemd
@@ -42,6 +35,4 @@
     enabled: true
     daemon_reload: true
   with_items:
-    - agrocomm.service
-    - agrocomm-scrape.service
-    - agrocomm-scrape.timer
+    - auth.lucasbrum.dev.service

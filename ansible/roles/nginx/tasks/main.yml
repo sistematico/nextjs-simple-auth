@@ -44,8 +44,7 @@
     mode: "0644"
     force: true
   with_items:
-    - 20-cdn.agrocomm.com.br.conf
-    - 21-agrocomm.com.br.conf
+    - 30-auth.lucasbrum.dev.conf
 
 - name: Restart nginx
   ansible.builtin.service:
