@@ -1,14 +1,25 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef } from "react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'danger';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: 'primary' | 'secondary' | 'danger' | 'link';
+  size?: "sm" | "md" | "lg";
   children: React.ReactNode;
+  asChild?: boolean;
   isLoading?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'primary', size = 'md', children, isLoading, className, ...props }, ref) => {
+  (
+    {
+      variant = "primary",
+      size = "md",
+      children,
+      isLoading,
+      className,
+      ...props
+    },
+    ref
+  ) => {
     return (
       <button
         ref={ref}
@@ -59,4 +70,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 
-Button.displayName = 'Button';
+Button.displayName = "Button";
+
+export { Button };
