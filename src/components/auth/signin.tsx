@@ -85,13 +85,13 @@ export function SignInForm() {
       </div>
 
       <div className="flex gap-4 justify-end">
-        <Button asChild>
-          <Link href="/sign-up" className="text-blue-600 hover:underline">
-            Sign Up
+        <Button asChild className="underline">
+          <Link href="/cadastro">
+            Cadastro
           </Link>
         </Button>
         <Button type="submit" disabled={loading}>
-          {loading ? "Signing in..." : "Sign In"}
+          {loading ? "Entrando..." : "Entrar"}
         </Button>
       </div>
     </form>

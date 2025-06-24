@@ -1,14 +1,16 @@
 import { db } from "@/db";
-import { usersTable } from "./schema";
+import { users } from "./schema";
 
 async function main() {
-  const user: typeof usersTable.$inferInsert = {
+  const user: typeof users.$inferInsert = {
     name: "John",
-    age: 30,
     email: "john@example.com",
+    password: "password",
+    salt: "salt",
+    role: "user",
   };
 
-  await db.insert(usersTable).values(user).onConflictDoNothing();
+  await db.insert(users).values(user).onConflictDoNothing();
 }
 
 main();

@@ -4,7 +4,7 @@ import { cache } from "react";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
 import { eq } from "drizzle-orm";
-import { UserTable } from "@/db/schema";
+import { users } from "@/db/schema";
 
 type FullUser = Exclude<
   Awaited<ReturnType<typeof getUserFromDb>>,
@@ -56,8 +56,8 @@ async function _getCurrentUser({
 export const getCurrentUser = cache(_getCurrentUser);
 
 function getUserFromDb(id: string) {
-  return db.query.UserTable.findFirst({
+  return db.query.users.findFirst({
     columns: { id: true, email: true, role: true, name: true },
-    where: eq(UserTable.id, id),
+    where: eq(users.id, id),
   });
 }

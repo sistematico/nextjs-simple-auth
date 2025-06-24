@@ -16,6 +16,7 @@ export function SignUpForm() {
     email: "",
     password: "",
   });
+
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [submitError, setSubmitError] = useState<string>();
   const [loading, setLoading] = useState(false);
@@ -32,7 +33,7 @@ export function SignUpForm() {
 
     if (!result.success) {
       const zErrors: typeof errors = {};
-      result.error.errors.forEach(err => {
+      result.error.errors.forEach((err) => {
         const field = err.path[0] as keyof FormData;
         zErrors[field] = err.message;
       });
@@ -54,7 +55,9 @@ export function SignUpForm() {
       {submitError && <p className="text-destructive">{submitError}</p>}
 
       <div className="space-y-2">
-        <label htmlFor="name" className="block font-medium">Name</label>
+        <label htmlFor="name" className="block font-medium">
+          Name
+        </label>
         <Input
           id="name"
           name="name"
@@ -62,11 +65,15 @@ export function SignUpForm() {
           value={formData.name}
           onChange={handleChange}
         />
-        {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
+        {errors.name && (
+          <p className="text-sm text-destructive">{errors.name}</p>
+        )}
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="email" className="block font-medium">Email</label>
+        <label htmlFor="email" className="block font-medium">
+          Email
+        </label>
         <Input
           id="email"
           name="email"
@@ -74,11 +81,15 @@ export function SignUpForm() {
           value={formData.email}
           onChange={handleChange}
         />
-        {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
+        {errors.email && (
+          <p className="text-sm text-destructive">{errors.email}</p>
+        )}
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="password" className="block font-medium">Password</label>
+        <label htmlFor="password" className="block font-medium">
+          Password
+        </label>
         <Input
           id="password"
           name="password"
@@ -86,15 +97,22 @@ export function SignUpForm() {
           value={formData.password}
           onChange={handleChange}
         />
-        {errors.password && <p className="text-sm text-destructive">{errors.password}</p>}
+        {errors.password && (
+          <p className="text-sm text-destructive">{errors.password}</p>
+        )}
       </div>
 
-      <div className="flex gap-4 justify-end">
-        <Button asChild variant="link">
-          <Link href="/sign-in">Sign In</Link>
+      <div className="flex justify-between">
+        <Button asChild>
+          <Link href="/entrar" className="underline">
+            Entrar
+          </Link>
         </Button>
+        {/* <Button asChild variant="link">
+          <Link href="/entrar">Entrar</Link>
+        </Button> */}
         <Button type="submit" disabled={loading}>
-          {loading ? "Signing up..." : "Sign Up"}
+          {loading ? "Cadastrando..." : "Cadastrar"}
         </Button>
       </div>
     </form>
