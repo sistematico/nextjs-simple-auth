@@ -1,8 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getCurrentUser } from "@/auth/user";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { LogOutButton } from "@/components/auth/logout";
 
 export default async function Home() {
   const fullUser = await getCurrentUser({ withFullUser: true });
@@ -31,61 +29,7 @@ export default async function Home() {
           </li>
         </ol>
 
-
-        {/* Mostrar estado de autenticação */}
-        {fullUser ? (
-          <Card className="w-full max-w-md">
-            <CardHeader>
-              <CardTitle>Bem-vindo, {fullUser.name}! 👋</CardTitle>
-              <CardDescription>
-                Você está logado como <strong>{fullUser.email}</strong>
-                <br />
-                <span className="text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded mt-1 inline-block">
-                  Role: {fullUser.role}
-                </span>
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex gap-2">
-              <LogOutButton />
-              {fullUser.role === "admin" && (
-                // <Button asChild variant="secondary">
-                  <Link href="/admin">Admin Panel</Link>
-                // </Button>
-              )}
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="text-center">
-            <p className="mb-4 text-gray-600 dark:text-gray-400">
-              Você não está logado
-            </p>
-            <div className="flex gap-4 items-center flex-col sm:flex-row">
-              <Link
-                className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-                href="/cadastro"
-              >
-                <Image
-                  className="dark:invert"
-                  src="/vercel.svg"
-                  alt="Vercel logomark"
-                  width={20}
-                  height={20}
-                />
-                Cadastro
-              </Link>
-              <Link
-                className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-                href="/entrar"
-              >
-                Entrar
-              </Link>
-            </div>
-          </div>
-        )}
-
-
-
-        {/* <div className="flex gap-4 items-center flex-col sm:flex-row">
+        <div className="flex gap-4 items-center flex-col sm:flex-row">
           <Link
             className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
             href="/cadastro"
@@ -105,8 +49,7 @@ export default async function Home() {
           >
             Entrar
           </a>
-        </div> */}
-
+        </div>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         <a
