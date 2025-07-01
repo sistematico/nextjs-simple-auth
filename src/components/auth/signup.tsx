@@ -51,12 +51,12 @@ export function SignUpForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-8">
+    <form onSubmit={onSubmit} className="space-y-8" autoComplete="nope">
       {submitError && <p className="text-destructive">{submitError}</p>}
 
       <div className="space-y-2">
         <label htmlFor="name" className="block font-medium">
-          Name
+          Nome
         </label>
         <Input
           id="name"
@@ -64,6 +64,7 @@ export function SignUpForm() {
           type="text"
           value={formData.name}
           onChange={handleChange}
+          autoComplete="new-password"
         />
         {errors.name && (
           <p className="text-sm text-destructive">{errors.name}</p>
@@ -80,6 +81,7 @@ export function SignUpForm() {
           type="email"
           value={formData.email}
           onChange={handleChange}
+          autoComplete="off"
         />
         {errors.email && (
           <p className="text-sm text-destructive">{errors.email}</p>
@@ -88,7 +90,7 @@ export function SignUpForm() {
 
       <div className="space-y-2">
         <label htmlFor="password" className="block font-medium">
-          Password
+          Senha
         </label>
         <Input
           id="password"
@@ -96,6 +98,7 @@ export function SignUpForm() {
           type="password"
           value={formData.password}
           onChange={handleChange}
+          autoComplete="new-password"
         />
         {errors.password && (
           <p className="text-sm text-destructive">{errors.password}</p>
