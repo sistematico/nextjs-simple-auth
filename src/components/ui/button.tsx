@@ -40,7 +40,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     if (asChild && isValidElement(children)) {
       // Garante que children aceita className
-      const child = children as ReactElement<Record<string, any>>;
+      const child = children as ReactElement<Record<string, unknown>>;
       return cloneElement(child, {
         className: [classes, child.props.className].filter(Boolean).join(" "),
         ref,
@@ -76,4 +76,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     );
   }
 );
+
 Button.displayName = "Button";
+
+export default Button;

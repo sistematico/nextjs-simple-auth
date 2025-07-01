@@ -18,5 +18,5 @@ elif [ "$DISTRO" == "arch" ]; then
 else
   ANSIBLE_PYTHON_INTERPRETER=auto_silent \
   ANSIBLE_CONFIG=/var/www/agrocomm/ansible/ansible.cfg \
-  ansible-playbook --connection=local -e "ansible_port=2200" /var/www/agrocomm/ansible/main.yml --ask-vault-pass -i localhost,
+  ansible-playbook --connection=local -e "ansible_port=2200" "${ROOT}/../ansible/main.yml" --ask-vault-pass -i localhost,
 fi
