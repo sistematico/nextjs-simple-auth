@@ -12,7 +12,6 @@ import { createUserSession, removeUserFromSession } from "@/auth/session";
 
 export async function signIn(unsafeData: z.infer<typeof signInSchema>) {
   const { success, data } = signInSchema.safeParse(unsafeData);
-
   if (!success) return "Unable to log you in";
 
   const user = await db.query.users.findFirst({
@@ -20,9 +19,8 @@ export async function signIn(unsafeData: z.infer<typeof signInSchema>) {
     where: eq(users.email, data.email),
   });
 
-  if (user == null || user.password == null || user.salt == null) {
-    return "Invalid email or password";
-  }
+  // if (!user || user == null || user.password == null || user.salt == null) {
+  if (!user) return "Invalid email or password";
 
   const isCorrectPassword = await comparePasswords({
     hashedPassword: user.password,

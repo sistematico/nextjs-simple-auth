@@ -1,5 +1,12 @@
 # Next.js Simple Auth
 
+<div style="text-align: center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/nextjs/logotype/dark-background/nextjs-logotype-dark-background.png">
+    <img alt="Text changing depending on mode. Light: 'So light!' Dark: 'So dark!'" src="./assets/nextjs/logotype/light-background/nextjs-logotype-light-background.png">
+  </picture>
+</div>
+
 [![Deploy](https://github.com/sistematico/nextjs-simple-auth/actions/workflows/deploy.yml/badge.svg)](https://github.com/sistematico/nextjs-simple-auth/actions/workflows/deploy.yml)
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).

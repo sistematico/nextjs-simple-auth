@@ -20,18 +20,22 @@ function _getCurrentUser(options: {
   withFullUser: true;
   redirectIfNotFound: true;
 }): Promise<FullUser>;
+
 function _getCurrentUser(options: {
   withFullUser: true;
   redirectIfNotFound?: false;
 }): Promise<FullUser | null>;
+
 function _getCurrentUser(options: {
   withFullUser?: false;
   redirectIfNotFound: true;
 }): Promise<User>;
+
 function _getCurrentUser(options?: {
   withFullUser?: false;
   redirectIfNotFound?: false;
 }): Promise<User | null>;
+
 async function _getCurrentUser({
   withFullUser = false,
   redirectIfNotFound = false,
