@@ -1,12 +1,19 @@
 // src/app/(auth)/entrar/page.tsx
 import { SignInForm } from "@/components/auth/signin";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { checkDatabaseConnection } from "@/db/health";
+import { redirect } from "next/navigation";
 
 export default async function SignIn({
   searchParams,
 }: {
   searchParams: Promise<{ oauthError?: string }>;
 }) {
+  const isDatabaseAvailable = await checkDatabaseConnection();
+  if (!isDatabaseAvailable) {
+    redirect("/?db=offline");
+  }
+
   const { oauthError } = await searchParams;
 
   return (

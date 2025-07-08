@@ -1,8 +1,15 @@
 // src/app/(auth)/cadastro/page.tsx
 import { SignUpForm } from "@/components/auth/signup";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { checkDatabaseConnection } from "@/db/health";
+import { redirect } from "next/navigation";
 
-export default function SignUp() {
+export default async function SignUp() {
+  const isDatabaseAvailable = await checkDatabaseConnection();
+  if (!isDatabaseAvailable) {
+    redirect("/?db=offline");
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-center min-h-[calc(100vh-10rem)]">

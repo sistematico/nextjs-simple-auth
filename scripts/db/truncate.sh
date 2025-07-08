@@ -6,7 +6,7 @@ PGPASSWORD="$DB_PASS"
 [ $1 ] && PGPASSWORD="$1"
 export PGPASSWORD
 
-if [ -f /etc/arch-release ]; then
+if [ -f /etc/arch-release ] || [ "$(sw_vers -productName 2> /dev/null)" == "macOS" ]; then
     CTRL_USER="$DB_USER"
 else 
     CTRL_USER="postgres"

@@ -3,13 +3,27 @@ import Image from "next/image";
 import { getCurrentUser } from "@/auth/user";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { LogOutButton } from "@/components/auth/logout";
+import { checkDatabaseConnection } from "@/db/health";
+import { DatabaseAlert } from "@/components/database-alert";
 
 export default async function Home() {
-  const user = await getCurrentUser({ withFullUser: true });
+  // const user = await getCurrentUser({ withFullUser: true });
+
+  const isDatabaseAvailable = await checkDatabaseConnection();
+  let user = null;
+
+  if (isDatabaseAvailable) {
+    try {
+      user = await getCurrentUser({ withFullUser: true });
+    } catch (error) {
+      console.error("Error fetching user:", error);
+    }
+  }
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+        {!isDatabaseAvailable && <DatabaseAlert />}
         <Image
           className="dark:invert"
           src="/next.svg"
@@ -48,7 +62,7 @@ export default async function Home() {
               <LogOutButton />
               {user.role === "admin" && (
                 // <Button asChild variant="secondary">
-                  <Link href="/admin">Admin Panel</Link>
+                <Link href="/admin">Admin Panel</Link>
                 // </Button>
               )}
             </CardContent>
@@ -58,27 +72,6 @@ export default async function Home() {
             <p className="mb-4 text-gray-600 dark:text-gray-400">
               Você não está logado
             </p>
-            <div className="flex gap-4 items-center flex-col sm:flex-row">
-              <Link
-                className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-                href="/cadastro"
-              >
-                <Image
-                  className="dark:invert"
-                  src="/vercel.svg"
-                  alt="Vercel logomark"
-                  width={20}
-                  height={20}
-                />
-                Cadastro
-              </Link>
-              <Link
-                className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-                href="/entrar"
-              >
-                Entrar
-              </Link>
-            </div>
           </div>
         )}
       </main>

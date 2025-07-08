@@ -1,21 +1,15 @@
-// import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
-import { pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
+import { pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
-// export const usersTable = pgTable("users", {
-//   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-//   name: varchar({ length: 255 }).notNull(),
-//   age: integer().notNull(),
-//   email: varchar({ length: 255 }).notNull().unique(),
-// });
-
-
-export const userRoles = ["admin", "user"] as const
-export type UserRole = (typeof userRoles)[number]
-export const userRoleEnum = pgEnum("user_roles", userRoles)
+export const userRoles = ["admin", "user"] as const;
+export type UserRole = (typeof userRoles)[number];
+export const userRoleEnum = pgEnum("user_roles", userRoles);
 
 export const users = pgTable("users", {
+  //   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   id: uuid().primaryKey().defaultRandom(),
   name: text().notNull(),
+  // username: text().notNull().unique(),
+  username: text(),
   email: text().notNull().unique(),
   password: text().notNull(),
   salt: text().notNull(),
@@ -25,6 +19,4 @@ export const users = pgTable("users", {
     .notNull()
     .defaultNow()
     .$onUpdate(() => new Date()),
-})
-
-// Removida a tabela UserOAuthAccountTable e relações OAuth
+});
