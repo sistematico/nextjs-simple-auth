@@ -1,8 +1,8 @@
-// src/components/layout/navbar.tsx
 "use client";
 
 import Link from "next/link";
 import Image from "next/image";
+import { logOut } from "@/app/actions";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
@@ -20,6 +20,10 @@ export function Header({ user }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 
+  const handleLogout = async () => {
+    await logOut();
+  };
+
   // Fechar menu ao mudar de rota
   useEffect(() => {
     setIsMenuOpen(false);
@@ -29,20 +33,19 @@ export function Header({ user }: NavbarProps) {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if (isMenuOpen && !target.closest('nav')) {
+      if (isMenuOpen && !target.closest("nav")) {
         setIsMenuOpen(false);
       }
     };
 
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, [isMenuOpen]);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-foreground/10">
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <Image
               className="dark:invert"
@@ -69,7 +72,12 @@ export function Header({ user }: NavbarProps) {
                     Admin
                   </Link>
                 )}
-                <LogOutLink />
+                <button
+                  onClick={handleLogout}
+                  className="text-sm text-red-600 hover:text-red-700 transition-colors cursor-pointer"
+                >
+                  Sair
+                </button>
               </>
             ) : (
               <>
@@ -99,20 +107,40 @@ export function Header({ user }: NavbarProps) {
             <span className="sr-only">Abrir menu</span>
             {isMenuOpen ? (
               // X icon
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             ) : (
               // Hamburger icon
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             )}
           </button>
         </div>
 
         {/* Mobile Menu */}
-        <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
+        <div className={`md:hidden ${isMenuOpen ? "block" : "hidden"}`}>
           <div className="px-2 pt-2 pb-3 space-y-1 bg-background border-t border-foreground/10 mt-2">
             {user ? (
               <>
@@ -127,7 +155,13 @@ export function Header({ user }: NavbarProps) {
                     Admin
                   </Link>
                 )}
-                <LogOutLink className="block px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors" />
+                {/* <LogOutLink className="block px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors" /> */}
+                <button
+                  onClick={handleLogout}
+                  className="block px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors cursor-pointer"
+                >
+                  Sair
+                </button>
               </>
             ) : (
               <>
@@ -149,22 +183,5 @@ export function Header({ user }: NavbarProps) {
         </div>
       </nav>
     </header>
-  );
-}
-
-// Componente separado para o link de logout
-function LogOutLink({ className = "" }: { className?: string }) {
-  const handleLogout = async () => {
-    const { logOut } = await import("@/app/actions");
-    await logOut();
-  };
-
-  return (
-    <button
-      onClick={handleLogout}
-      className={className || "text-sm text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors"}
-    >
-      Sair
-    </button>
   );
 }

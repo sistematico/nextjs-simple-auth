@@ -1,12 +1,15 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+// import Link from "next/link";
 import { logOut } from "@/app/actions";
 
 export function LogOutButton() {
   return (
-    <Button variant="danger" onClick={async () => await logOut()}>
+    <button onClick={async () => await logOut()}>
       Sair
-    </Button>
+    </button>
+    // <Button variant="danger" onClick={async () => await logOut()}>
+    //   Sair
+    // </Button>
   );
 }

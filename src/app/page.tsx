@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getCurrentUser } from "@/auth/user";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { LogOutButton } from "@/components/auth/logout";
+// import { LogOutButton } from "@/components/auth/logout";
 import { checkDatabaseConnection } from "@/db/health";
 import { DatabaseAlert } from "@/components/database-alert";
 
@@ -59,7 +59,7 @@ export default async function Home() {
               </CardDescription>
             </CardHeader>
             <CardContent className="flex gap-2">
-              <LogOutButton />
+              {/* <LogOutButton /> */}
               {user.role === "admin" && (
                 // <Button asChild variant="secondary">
                 <Link href="/admin">Admin Panel</Link>
