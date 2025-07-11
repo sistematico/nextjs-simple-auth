@@ -9,45 +9,29 @@
 
 [![Deploy](https://github.com/sistematico/nextjs-simple-auth/actions/workflows/deploy.yml/badge.svg)](https://github.com/sistematico/nextjs-simple-auth/actions/workflows/deploy.yml)
 
-Este foi um projeto criado com o [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) usando o [Next.js](https://nextjs.org).
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Iniciando
+## Getting Started
 
-Copie o conteúdo do arquivo `.env.development` para um novo arquivo `.env`.
-
-Instale as dependências:
+First, run the development server:
 
 ```bash
-bun install
-```
-
-Inicie o container do Podman:
-
-```bash
-bash scripts/podman.sh
-```
-
-Inicialize o banco de dados:
-
-```bash
-bun db:push
-bun db:generate
-bun db:seed
-```
-
-Rode o servidor de desenvolvimento:
-
-```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
 bun dev
 ```
 
-Abra o endereço [http://localhost:3000](http://localhost:3000) no seu navegador e veja o resultado.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Você pode começar editando o arquivo `src/app/page.tsx`. A página atualiza automaticamente após a edição do arquivo.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Saiba mais
+## Learn More
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -62,4 +46,4 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-[[en](./README.en.md]|pt]
+[en|[pt](./README.pt.md]]

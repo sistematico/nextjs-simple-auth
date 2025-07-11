@@ -2,13 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { getCurrentUser } from "@/auth/user";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-// import { LogOutButton } from "@/components/auth/logout";
 import { checkDatabaseConnection } from "@/db/health";
 import { DatabaseAlert } from "@/components/database-alert";
 
 export default async function Home() {
-  // const user = await getCurrentUser({ withFullUser: true });
-
   const isDatabaseAvailable = await checkDatabaseConnection();
   let user = null;
 
@@ -21,7 +18,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-nunito-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         {!isDatabaseAvailable && <DatabaseAlert />}
         <Image
@@ -32,20 +29,10 @@ export default async function Home() {
           height={38}
           priority
         />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        {/* Mostrar estado de autenticação */}
+        <p className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
+          Este é um exemplo simples de autenticação com Next.js e Auth.js. <br />
+          Para mais informações, consulte a o repositório no Github: <a href="https://github.com/sistematico/nextjs-simple-auth" className="text-blue-500 hover:underline" target="_blank">sistematico/nextjs-simple-auth</a>.
+        </p>
         {user ? (
           <Card className="w-full max-w-md">
             <CardHeader>
@@ -59,11 +46,8 @@ export default async function Home() {
               </CardDescription>
             </CardHeader>
             <CardContent className="flex gap-2">
-              {/* <LogOutButton /> */}
               {user.role === "admin" && (
-                // <Button asChild variant="secondary">
                 <Link href="/admin">Admin Panel</Link>
-                // </Button>
               )}
             </CardContent>
           </Card>
