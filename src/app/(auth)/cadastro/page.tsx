@@ -15,7 +15,7 @@ export default async function SignUp() {
       <div className="flex items-center justify-center min-h-[calc(100vh-10rem)]">
         <Card className="w-full max-w-md">
           <CardHeader>
-            <CardTitle>Cadastro</CardTitle>
+            <CardTitle className="text-2xl">Cadastro</CardTitle>
           </CardHeader>
           <CardContent>
             <SignUpForm />

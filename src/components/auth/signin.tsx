@@ -90,7 +90,6 @@ export function SignInForm() {
           {submitError}
         </div>
       )}
-
       <div className="space-y-2">
         <label htmlFor="email" className="block font-medium">
           Email
@@ -112,7 +111,6 @@ export function SignInForm() {
           </p>
         )}
       </div>
-
       <div className="space-y-2">
         <label htmlFor="password" className="block font-medium">
           Senha
@@ -129,8 +127,18 @@ export function SignInForm() {
           <p className="text-sm text-red-600">{errors.password}</p>
         )}
       </div>
-
-      <div className="flex gap-4 justify-end">
+      <div className="flex items-center justify-between">
+        <div>
+          Ainda não tem uma conta?{" "}
+          <Link href="/cadastro" className="underline">
+            Cadastre-se
+          </Link>
+        </div>
+        <Button type="submit" disabled={loading || !!errors.email || !!errors.password}>
+          {loading ? "Entrando..." : "Entrar"}
+        </Button>
+      </div>
+      {/* <div className="flex gap-4 justify-end">
         <Button asChild className="underline">
           <Link href="/cadastro">
             Criar conta
@@ -139,7 +147,7 @@ export function SignInForm() {
         <Button type="submit" disabled={loading || !!errors.email}>
           {loading ? "Entrando..." : "Entrar"}
         </Button>
-      </div>
+      </div> */}
     </form>
   );
 }

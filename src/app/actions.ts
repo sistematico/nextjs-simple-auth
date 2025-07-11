@@ -10,17 +10,23 @@ import { comparePasswords, generateSalt, hashPassword } from "@/auth/password";
 import { cookies } from "next/headers";
 import { createUserSession, removeUserFromSession } from "@/auth/session";
 
+const messages = {
+  invalidEmailOrPassword: "E-mail e/ou senha inválidos",
+  unableToCreateAccount: "Não foi possível criar a conta",
+  unableToLogIn: "Não foi possível fazer login",
+  accountAlreadyExists: "Já existe uma conta com este e-mail",
+}
+
 export async function signIn(unsafeData: z.infer<typeof signInSchema>) {
   const { success, data } = signInSchema.safeParse(unsafeData);
-  if (!success) return "Unable to log you in";
+  if (!success) return messages.unableToLogIn;
 
   const user = await db.query.users.findFirst({
     columns: { password: true, salt: true, id: true, email: true, role: true },
     where: eq(users.email, data.email),
   });
 
-  // if (!user || user == null || user.password == null || user.salt == null) {
-  if (!user) return "Invalid email or password";
+  if (!user) return messages.invalidEmailOrPassword;
 
   const isCorrectPassword = await comparePasswords({
     hashedPassword: user.password,
@@ -28,7 +34,7 @@ export async function signIn(unsafeData: z.infer<typeof signInSchema>) {
     salt: user.salt,
   });
 
-  if (!isCorrectPassword) return "Invalid email or password";
+  if (!isCorrectPassword) return messages.invalidEmailOrPassword;
 
   await createUserSession(user, await cookies());
 
@@ -38,13 +44,13 @@ export async function signIn(unsafeData: z.infer<typeof signInSchema>) {
 export async function signUp(unsafeData: z.infer<typeof signUpSchema>) {
   const { success, data } = signUpSchema.safeParse(unsafeData);
 
-  if (!success) return "Unable to create account";
+  if (!success) return messages.unableToCreateAccount;
 
   const existingUser = await db.query.users.findFirst({
     where: eq(users.email, data.email),
   });
 
-  if (existingUser != null) return "Account already exists for this email";
+  if (existingUser != null) return messages.accountAlreadyExists;
 
   try {
     const salt = generateSalt();
@@ -60,11 +66,11 @@ export async function signUp(unsafeData: z.infer<typeof signUpSchema>) {
       })
       .returning({ id: users.id, role: users.role });
 
-    if (user == null) return "Unable to create account";
+    if (user == null) return messages.unableToCreateAccount;
     await createUserSession(user, await cookies());
   } catch (error) {
     console.error("Error creating user:", error);
-    return "Unable to create account";
+    return messages.unableToCreateAccount;
   }
 
   redirect("/");
@@ -74,5 +80,3 @@ export async function logOut() {
   await removeUserFromSession(await cookies());
   redirect("/");
 }
-
-// A função oAuthSignIn foi removida

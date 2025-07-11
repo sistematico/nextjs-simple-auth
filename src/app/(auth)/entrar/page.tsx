@@ -21,7 +21,7 @@ export default async function SignIn({
       <div className="flex items-center justify-center min-h-[calc(100vh-10rem)]">
         <Card className="w-full max-w-md">
           <CardHeader>
-            <CardTitle>Entrar</CardTitle>
+            <CardTitle className="text-2xl">Entrar</CardTitle>
             {oauthError && (
               <CardDescription className="text-destructive">
                 {oauthError}

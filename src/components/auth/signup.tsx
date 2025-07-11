@@ -1,4 +1,3 @@
-// src/components/auth/signup.tsx
 "use client";
 
 import { useState } from "react";
@@ -95,7 +94,6 @@ export function SignUpForm() {
           {submitError}
         </div>
       )}
-
       <div className="space-y-2">
         <label htmlFor="name" className="block font-medium">
           Nome
@@ -159,7 +157,6 @@ export function SignUpForm() {
           Use pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas, números e símbolos.
         </p>
       </div>
-
       <div className="flex justify-between">
         <Link href="/entrar" className="underline">
           Já tenho conta
