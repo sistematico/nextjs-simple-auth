@@ -1,21 +1,22 @@
 "use client";
 
-// import { useState, forwardRef } from "react";
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
-export function InputPassword({ className = "", showStrength = false, ...props }) {
+interface InputPasswordProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  showStrength?: boolean;
+}
 
-// export const InputPassword = forwardRef<HTMLInputElement, InputPasswordProps>(
-  // ({ className, showStrength = false, ...props }, ref) => {
+export const InputPassword = forwardRef<HTMLInputElement, InputPasswordProps>(
+  ({ className, showStrength = false, ...props }, ref) => {
     const [isVisible, setIsVisible] = useState(false);
     const toggleVisibility = () => setIsVisible(prevState => !prevState);
 
     return (
       <div className="relative">
         <Input
-          // ref={ref}
+          ref={ref}
           type={isVisible ? "text" : "password"}
           className={`pr-10 ${className || ""}`}
           {...props}
@@ -36,6 +37,6 @@ export function InputPassword({ className = "", showStrength = false, ...props }
       </div>
     );
   }
+);
 
-
-// InputPassword.displayName = "InputPassword";
+InputPassword.displayName = "InputPassword";
