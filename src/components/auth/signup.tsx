@@ -8,6 +8,7 @@ import { signUpSchema } from "@/schemas/auth";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PasswordStrength } from "@/components/ui/password-strength";
+import { InputPassword } from "@/components/ui/input-password";
 import Link from "next/link";
 
 type FormData = z.infer<typeof signUpSchema>;
@@ -40,11 +41,9 @@ export function SignUpForm() {
     setFormData({ ...formData, [name]: value });
     
     // Validação em tempo real para email
-    if (name === "email") {
-      if (emailTouched) {
-        const emailError = validateEmail(value);
-        setErrors({ ...errors, email: emailError });
-      }
+    if (name === "email" && emailTouched) {
+      const emailError = validateEmail(value);
+      setErrors({ ...errors, email: emailError });
     } else {
       setErrors({ ...errors, [name]: undefined });
     }
@@ -142,14 +141,15 @@ export function SignUpForm() {
         <label htmlFor="password" className="block font-medium">
           Senha
         </label>
-        <Input
+        <InputPassword
           id="password"
           name="password"
-          type="password"
           value={formData.password}
           onChange={handleChange}
           autoComplete="new-password"
           className={errors.password ? "border-red-500" : ""}
+          placeholder="Digite sua senha..."
+          showStrength={true}
         />
         <PasswordStrength password={formData.password} />
         {errors.password && (
@@ -161,11 +161,9 @@ export function SignUpForm() {
       </div>
 
       <div className="flex justify-between">
-        {/* <Button asChild> */}
-          <Link href="/entrar" className="underline">
-            Já tenho conta
-          </Link>
-        {/* </Button> */}
+        <Link href="/entrar" className="underline">
+          Já tenho conta
+        </Link>
         <Button type="submit" disabled={loading || !!errors.email}>
           {loading ? "Cadastrando..." : "Cadastrar"}
         </Button>

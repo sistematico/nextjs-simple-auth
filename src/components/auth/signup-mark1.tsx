@@ -1,24 +1,26 @@
+// src/components/auth/signup.tsx
 "use client";
 
 import { useState } from "react";
-import { signIn } from "@/app/actions";
+import { signUp } from "@/app/actions";
 import { z } from "zod";
-import { signInSchema } from "@/schemas/auth";
+import { signUpSchema } from "@/schemas/auth";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { InputPassword } from "@/components/ui/input-password";
+import { PasswordStrength } from "@/components/ui/password-strength";
+import { InputPassword } from "@/components/ui/password";
 import Link from "next/link";
 
-type FormData = z.infer<typeof signInSchema>;
+type FormData = z.infer<typeof signUpSchema>;
 
-export function SignInForm() {
+export function SignUpForm() {
   const [formData, setFormData] = useState<FormData>({
+    name: "",
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
-    {}
-  );
+
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [submitError, setSubmitError] = useState<string>();
   const [loading, setLoading] = useState(false);
   const [emailTouched, setEmailTouched] = useState(false);
@@ -27,9 +29,7 @@ export function SignInForm() {
     if (!email) return "Email é obrigatório";
     
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return "Email inválido. Exemplo: usuario@dominio.com";
-    }
+    if (!emailRegex.test(email)) return "Email inválido. Exemplo: usuario@dominio.com";
     
     return undefined;
   }
@@ -39,9 +39,11 @@ export function SignInForm() {
     setFormData({ ...formData, [name]: value });
     
     // Validação em tempo real para email
-    if (name === "email" && emailTouched) {
-      const emailError = validateEmail(value);
-      setErrors({ ...errors, email: emailError });
+    if (name === "email") {
+      if (emailTouched) {
+        const emailError = validateEmail(value);
+        setErrors({ ...errors, email: emailError });
+      }
     } else {
       setErrors({ ...errors, [name]: undefined });
     }
@@ -57,7 +59,7 @@ export function SignInForm() {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-
+    
     // Validar email antes de enviar
     const emailError = validateEmail(formData.email);
     if (emailError) {
@@ -65,31 +67,52 @@ export function SignInForm() {
       return;
     }
 
-    const result = signInSchema.safeParse(formData);
+    const result = signUpSchema.safeParse(formData);
+
     if (!result.success) {
-      const map: typeof errors = {};
+      const zErrors: typeof errors = {};
       result.error.errors.forEach((err) => {
         const field = err.path[0] as keyof FormData;
-        map[field] = err.message;
+        zErrors[field] = err.message;
       });
-      setErrors(map);
+      setErrors(zErrors);
       return;
     }
 
     setLoading(true);
-    const error = await signIn(result.data);
+    const serverError = await signUp(result.data);
     setLoading(false);
 
-    if (error) setSubmitError(error);
+    if (serverError) {
+      setSubmitError(serverError);
+    }
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-8">
+    <form onSubmit={onSubmit} className="space-y-8" autoComplete="nope">
       {submitError && (
         <div className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-3 rounded-md text-sm">
           {submitError}
         </div>
       )}
+
+      <div className="space-y-2">
+        <label htmlFor="name" className="block font-medium">
+          Nome
+        </label>
+        <Input
+          id="name"
+          name="name"
+          type="text"
+          value={formData.name}
+          onChange={handleChange}
+          autoComplete="new-password"
+          className={errors.name ? "border-red-500" : ""}
+        />
+        {errors.name && (
+          <p className="text-sm text-red-600">{errors.name}</p>
+        )}
+      </div>
 
       <div className="space-y-2">
         <label htmlFor="email" className="block font-medium">
@@ -102,6 +125,7 @@ export function SignInForm() {
           value={formData.email}
           onChange={handleChange}
           onBlur={handleEmailBlur}
+          autoComplete="off"
           className={errors.email ? "border-red-500" : ""}
           aria-invalid={!!errors.email}
           aria-describedby={errors.email ? "email-error" : undefined}
@@ -117,27 +141,32 @@ export function SignInForm() {
         <label htmlFor="password" className="block font-medium">
           Senha
         </label>
-        <InputPassword
+        <Input
           id="password"
           name="password"
+          type="password"
           value={formData.password}
           onChange={handleChange}
+          autoComplete="new-password"
           className={errors.password ? "border-red-500" : ""}
-          placeholder="Digite sua senha..."
         />
+        <PasswordStrength password={formData.password} />
         {errors.password && (
           <p className="text-sm text-red-600">{errors.password}</p>
         )}
+        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+          Use pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas, números e símbolos.
+        </p>
       </div>
 
-      <div className="flex gap-4 justify-end">
-        <Button asChild className="underline">
-          <Link href="/cadastro">
-            Criar conta
+      <div className="flex justify-between">
+        {/* <Button asChild> */}
+          <Link href="/entrar" className="underline">
+            Já tenho conta
           </Link>
-        </Button>
+        {/* </Button> */}
         <Button type="submit" disabled={loading || !!errors.email}>
-          {loading ? "Entrando..." : "Entrar"}
+          {loading ? "Cadastrando..." : "Cadastrar"}
         </Button>
       </div>
     </form>

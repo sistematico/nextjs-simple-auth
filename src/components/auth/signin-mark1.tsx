@@ -1,3 +1,4 @@
+// src/components/auth/signin.tsx
 "use client";
 
 import { useState } from "react";
@@ -6,7 +7,6 @@ import { z } from "zod";
 import { signInSchema } from "@/schemas/auth";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { InputPassword } from "@/components/ui/input-password";
 import Link from "next/link";
 
 type FormData = z.infer<typeof signInSchema>;
@@ -117,13 +117,13 @@ export function SignInForm() {
         <label htmlFor="password" className="block font-medium">
           Senha
         </label>
-        <InputPassword
+        <Input
           id="password"
           name="password"
+          type="password"
           value={formData.password}
           onChange={handleChange}
           className={errors.password ? "border-red-500" : ""}
-          placeholder="Digite sua senha..."
         />
         {errors.password && (
           <p className="text-sm text-red-600">{errors.password}</p>
