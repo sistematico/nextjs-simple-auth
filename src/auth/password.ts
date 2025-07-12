@@ -19,12 +19,26 @@ export async function comparePasswords({
   salt: string
   hashedPassword: string
 }) {
-  const inputHashedPassword = await hashPassword(password, salt)
+  try {
+    const inputHashedPassword = await hashPassword(password, salt)
+    
+    // Verificar se os hashes têm o mesmo tamanho
+    if (inputHashedPassword.length !== hashedPassword.length) {
+      console.error('Hash length mismatch:', {
+        input: inputHashedPassword.length,
+        stored: hashedPassword.length
+      })
+      return false
+    }
 
-  return crypto.timingSafeEqual(
-    Buffer.from(inputHashedPassword, "hex"),
-    Buffer.from(hashedPassword, "hex")
-  )
+    return crypto.timingSafeEqual(
+      Buffer.from(inputHashedPassword, "hex"),
+      Buffer.from(hashedPassword, "hex")
+    )
+  } catch (error) {
+    console.error('Error comparing passwords:', error)
+    return false
+  }
 }
 
 export function generateSalt() {
