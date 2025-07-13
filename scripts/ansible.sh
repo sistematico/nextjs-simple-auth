@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# ansible-vault create roles/postgres/vars/vault.yml
+# ansible-vault create ansible/roles/postgres/vars/vault.yml
 ROOT=$(dirname "$(readlink -f "$0")")
 DISTRO=$(lsb_release -c | awk '{print $2}' 2>/dev/null | tr -d ' ')
 

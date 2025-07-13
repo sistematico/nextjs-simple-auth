@@ -9,8 +9,8 @@ git clean -fxd
 [ -f /tmp/env.auth.lucasbrum ] && cp /tmp/env.auth.lucasbrum .env.production
 sudo /usr/bin/systemctl stop auth.lucasbrum.dev.service
 
-bash scripts/db/drop.sh
-bash scripts/db/create.sh
+sudo bash scripts/db/drop.sh
+sudo bash scripts/db/create.sh
 
 bun install
 bun run build
