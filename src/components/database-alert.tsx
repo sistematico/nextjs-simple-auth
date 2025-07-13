@@ -1,7 +1,9 @@
+// "use client";
+
 // import { useState } from "react";
 
 export function DatabaseAlert() {
-  // const [isActive, setIsActive] = useState(false);
+  // const [isActive, setIsActive] = useState(true);
   
   return (
     // <div className="bg-red-500 text-white px-4 py-3 text-center">
