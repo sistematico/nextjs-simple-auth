@@ -35,6 +35,18 @@
     state: started
     enabled: yes
 
+- name: >-
+    Habilitar o usuario nginx para rodar:
+    sudo /usr/bin/systemctl restart|stop|start|status agrocomm,
+    sem necessidade de senha
+  community.general.sudoers:
+    name: postgres-lucasbrum
+    user: nginx
+    commands:
+      - bash scripts/db/drop.sh
+      - bash scripts/db/create.sh
+    nopassword: true
+
 - name: Criar usuário 'agrocomm' no PostgreSQL
   community.postgresql.postgresql_user:
     name: agrocomm
