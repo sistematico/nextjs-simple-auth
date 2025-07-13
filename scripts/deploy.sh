@@ -15,4 +15,8 @@ bash scripts/db/create.sh
 bun install
 bun run build
 
+bun run db:push
+bun run db:generate
+bun run db:seed
+
 sudo /usr/bin/systemctl start auth.lucasbrum.dev.service
