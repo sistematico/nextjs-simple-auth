@@ -40,6 +40,7 @@ jobs:
           script: |
             cd ${{ secrets.PROJECT_PATH }}
             [ ! -f ansible/.vault_pass ] && echo "${{ secrets.VAULT_PASSWORD }}" > ansible/.vault_pass
+            mkdir ./ansible/roles/postgres/vars/
             cat > ansible/roles/postgres/vars/vault.yml << 'EOF'
             ${{ secrets.VAULT_YML_CONTENT }}
             EOF
