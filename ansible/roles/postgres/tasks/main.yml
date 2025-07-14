@@ -48,10 +48,10 @@
       - /bin/bash scripts/db/create.sh
     nopassword: true
 
-- name: Criar usuário 'agrocomm' no PostgreSQL
+- name: Criar usuário 'lucasbrum' no PostgreSQL
   community.postgresql.postgresql_user:
-    name: agrocomm
-    password: "{{ agrocomm_db_password }}"
+    name: lucasbrum
+    password: "{{ db_password }}"
     role_attr_flags: CREATEDB,LOGIN
     state: present
     login_user: postgres
