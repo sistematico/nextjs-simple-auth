@@ -3,10 +3,11 @@
 PATH=$PATH:/home/nginx/.bun/bin
 
 [ -f .env.production ] && cp .env.production /tmp/env.auth.lucasbrum
+[ -f ansible/.vault_pass ] && cp ansible/.vault_pass /tmp/.auth.lucasbrum.vault_pass
 
 git clean -fxd
 
-[ -f /tmp/env.auth.lucasbrum ] && cp /tmp/env.auth.lucasbrum .env.production
+[ -f /tmp/.auth.lucasbrum.vault_pass ] && cp /tmp/.auth.lucasbrum.vault_pass ansible/.vault_pass
 sudo /usr/bin/systemctl stop auth.lucasbrum.dev.service
 
 sudo /bin/bash scripts/db/drop.sh
