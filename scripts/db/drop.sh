@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "$(dirname "$0")/../other/read_env.sh"
+source "$(dirname "$0")/../other/env.sh"
 
 PGPASSWORD="$DB_PASS"
 [ $1 ] && PGPASSWORD="$1"
