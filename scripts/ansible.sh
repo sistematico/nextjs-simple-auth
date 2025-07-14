@@ -9,19 +9,12 @@ DISTRO=$(lsb_release -c | awk '{print $2}' 2>/dev/null | tr -d ' ')
 
 echo "Running Ansible playbook for $DISTRO"
 
-if [ "$DISTRO" == "void" ]; then
+if [ "$DISTRO" == "void" ] || [ "$DISTRO" == "arch" ]; then
   ANSIBLE_PYTHON_INTERPRETER=auto_silent \
   ANSIBLE_CONFIG="${ROOT}/../ansible/ansible.cfg" \
   ansible-playbook -e "ansible_port=2200" "${ROOT}/../ansible/main.yml" -i tyche,
-elif [ "$DISTRO" == "arch" ]; then
-  ANSIBLE_PYTHON_INTERPRETER=auto_silent \
-  ANSIBLE_CONFIG="${ROOT}/../ansible/ansible.cfg" \
-  ansible-playbook -e "ansible_port=2200" "${ROOT}/../ansible/main.yml" -i tyche,
-  # ansible-playbook -e "ansible_port=2200" "${ROOT}/../ansible/main.yml" --ask-vault-pass -i tyche,
 else
   ANSIBLE_PYTHON_INTERPRETER=auto_silent \
   ANSIBLE_CONFIG="${ROOT}/../ansible/ansible.cfg" \
-  #ansible-playbook --vault-password-file ${ROOT}/../ansible/.vault_pass \
-  ansible-playbook -K --vault-password-file "${ROOT}/../ansible/.vault_pass"  --connection=local -e "ansible_port=2200" \
-    "${ROOT}/../ansible/main.yml" -i localhost,
+  ansible-playbook -K --vault-password-file "${ROOT}/../ansible/.vault_pass"  --connection=local -e "ansible_port=2200" "${ROOT}/../ansible/main.yml" -i localhost,
 fi
