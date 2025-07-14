@@ -12,17 +12,22 @@ else
     CTRL_USER="postgres"
 fi
 
-psql -h "$DB_HOST" -p "$DB_PORT" -U "$CTRL_USER" -c "CREATE DATABASE $DB_NAME;"
-echo "✅ Banco de dados $DB_NAME criado."
+# psql -h "$DB_HOST" -p "$DB_PORT" -U "$CTRL_USER" -c "CREATE DATABASE $DB_NAME;"
+# sudo -u postgres psql -h "$DB_HOST" -p "$DB_PORT" -U "$CTRL_USER" -c "CREATE DATABASE $DB_NAME;"
+sudo -u postgres psql -v username="$DB_USER" -v password="$DB_PASSWORD" -v dbname="$DB_NAME" -f scripts/db/user.sql
 
-psql -h "$DB_HOST" -p "$DB_PORT" -U "$CTRL_USER" -c "CREATE USER $DB_USER WITH ENCRYPTED PASSWORD '$DB_PASS';"
+
+echo "✅ Banco de dados $DB_NAME criado."
+sudo -u postgres psql -v username="$DB_USER" -v password="$DB_PASSWORD" -v dbname="$DB_NAME" -f scripts/db/create.sql
+
+#psql -h "$DB_HOST" -p "$DB_PORT" -U "$CTRL_USER" -c "CREATE USER $DB_USER WITH ENCRYPTED PASSWORD '$DB_PASS';"
 echo "✅ Usuário $DB_USER criado."
 
-psql -h "$DB_HOST" -p "$DB_PORT" -U "$CTRL_USER" -c "GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;"
+#psql -h "$DB_HOST" -p "$DB_PORT" -U "$CTRL_USER" -c "GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;"
 echo "✅ Privilégios ao banco $DB_NAME adicionados a $DB_USER."
 
-psql -h "$DB_HOST" -p "$DB_PORT" -d "$DB_NAME" -U "$CTRL_USER" -c "GRANT ALL ON SCHEMA public TO $DB_USER;"
 echo "✅ Privivlégios ao esquema 'public' adicionados ao usuário $DB_USER para o banco ${DB_NAME}."
+#psql -h "$DB_HOST" -p "$DB_PORT" -d "$DB_NAME" -U "$CTRL_USER" -c "GRANT ALL ON SCHEMA public TO $DB_USER;"
 
 if grep -q "DATABASE_URL" $ENV_FILE; then
     sed -i "s|DATABASE_URL=.*|DATABASE_URL=\"postgres://$DB_USER:$DB_PASS@$DB_HOST:$DB_PORT/$DB_NAME?schema=public\"|" $ENV_FILE

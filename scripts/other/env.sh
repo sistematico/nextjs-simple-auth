@@ -13,6 +13,9 @@ fi
 
 DB_URL=$(grep -E "^DATABASE_URL=" "$ENV_FILE" | cut -d '=' -f2- | tr -d '"' | tr -d "'")
 
+POSGRES_USER=$(grep -E "^POSGRES_USER=" "$ENV_FILE" | cut -d '=' -f2- | tr -d '"' | tr -d "'")
+POSGRES_PASS=$(grep -E "^POSGRES_PASS=" "$ENV_FILE" | cut -d '=' -f2- | tr -d '"' | tr -d "'")
+
 if [ -z "$DB_URL" ]; then
     echo "Erro: DATABASE_URL não encontrada no arquivo $ENV_FILE."
     exit 1
@@ -37,6 +40,9 @@ DB_NAME=$(echo "$DB_URL" | sed -n 's/^postgres:\/\/[^/]*\/\([^?]*\).*/\1/p')
 
 # App Name
 APP_NAME=$(grep -E "^NEXT_PUBLIC_APP_NAME=" "$ENV_FILE" | cut -d '=' -f2- | tr -d '"' | tr -d "'")
+
+export POSGRES_USER
+export POSGRES_PASS
 
 export DB_USER
 export DB_PASS
