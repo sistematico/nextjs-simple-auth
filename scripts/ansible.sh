@@ -22,6 +22,6 @@ else
   ANSIBLE_PYTHON_INTERPRETER=auto_silent \
   ANSIBLE_CONFIG="${ROOT}/../ansible/ansible.cfg" \
   #ansible-playbook --vault-password-file ${ROOT}/../ansible/.vault_pass \
-  ansible-playbook -bK --connection=local -e "ansible_port=2200" \
+  ansible-playbook -bK --ansible-vault-file "${ROOT}/../ansible/.vault_pass"  --connection=local -e "ansible_port=2200" \
     "${ROOT}/../ansible/main.yml" -i localhost,
 fi
