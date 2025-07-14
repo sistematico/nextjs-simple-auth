@@ -44,5 +44,5 @@ next-env.d.ts
 drizzle/**
 !drizzle/.gitkeep
 .vault_pass
-ansible/.vault_pass
-ansible/roles/postgres/vars/vault.yml
+.vault_pass
+vault.yml
