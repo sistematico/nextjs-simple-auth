@@ -3,21 +3,6 @@ import { users } from "./schema";
 import { eq } from "drizzle-orm";
 import { generateSalt, hashPassword } from "@/auth/password";
 
-// async function main() {
-//   const user: typeof users.$inferInsert = {
-//     name: "Lucas Saliés Brum",
-//     username: "lsbrum",
-//     email: "lsbrum@icloud.com",
-//     password: "password",
-//     salt: "salt",
-//     role: "admin",
-//   };
-
-//   await db.insert(users).values(user).onConflictDoNothing();
-// }
-
-// main();
-
 async function main() {
   await db.delete(users).where(eq(users.email, "lsbrum@icloud.com"));
   
