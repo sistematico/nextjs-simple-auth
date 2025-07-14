@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # Excluir arquivos sensíveis antes do deploy
+      - name: Remove sensitive files
+        run: |
+          rm -f ansible/.vault_pass
+          rm -f ansible/roles/postgres/vars/vault.yml      
       - name: Copy site via SSH with Password
         uses: appleboy/scp-action@v1
         with:
@@ -35,5 +40,12 @@ jobs:
           script: |
             cd ${{ secrets.PROJECT_PATH }}
             [ ! -f ansible/.vault_pass ] && echo "${{ secrets.VAULT_PASSWORD }}" > ansible/.vault_pass
+            cat > ansible/roles/postgres/vars/vault.yml << 'EOF'
+            ${{ secrets.VAULT_YML_CONTENT }}
+            EOF
+            
+            # Ajustar permissões
+            chmod 600 ansible/.vault_pass
+            chmod 600 ansible/roles/postgres/vars/vault.yml
             chmod 600 ansible/.vault_pass
             bash scripts/deploy.sh
