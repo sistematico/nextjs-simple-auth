@@ -7,7 +7,6 @@ const adminRoutes = ["/admin"];
 export async function middleware(request: NextRequest) {
   const response = (await middlewareAuth(request)) ?? NextResponse.next();
 
-  // Atualizar a expiração da sessão
   await updateUserSessionExpiration({
     set: (key, value, options) => {
       response.cookies.set({ ...options, name: key, value });
@@ -38,8 +37,5 @@ async function middlewareAuth(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-  ],
+  matcher: ["/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)"],
 };

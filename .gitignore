@@ -46,3 +46,8 @@ drizzle/**
 .vault_pass
 .vault_pass
 vault.yml
+
+# database
+*.db
+drizzle/**
+!drizzle/.gitkeep

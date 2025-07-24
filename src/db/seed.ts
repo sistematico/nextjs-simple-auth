@@ -1,6 +1,6 @@
+import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { users } from "./schema";
-import { eq } from "drizzle-orm";
 import { generateSalt, hashPassword } from "@/auth/password";
 
 async function main() {

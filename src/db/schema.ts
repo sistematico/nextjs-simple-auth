@@ -1,22 +1,19 @@
-import { pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
+import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-export const userRoles = ["admin", "user"] as const;
-export type UserRole = (typeof userRoles)[number];
-export const userRoleEnum = pgEnum("user_roles", userRoles);
+export type Role = "guest" | "user" | "admin";
 
-export const users = pgTable("users", {
-  //   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  id: uuid().primaryKey().defaultRandom(),
+export const users = sqliteTable("users", {
+  id: int().primaryKey({ autoIncrement: true }),
   name: text().notNull(),
-  // username: text().notNull().unique(),
+  age: int(),
   username: text(),
   email: text().notNull().unique(),
   password: text().notNull(),
   salt: text().notNull(),
-  role: userRoleEnum().notNull().default("user"),
-  createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp({ withTimezone: true })
+  role: text().$type<Role>().default("guest"),
+  createdAt: text().notNull().default(sql`(current_timestamp)`),
+  updatedAt: text()
     .notNull()
-    .defaultNow()
-    .$onUpdate(() => new Date()),
+    .$onUpdate(() => new Date().toISOString()),
 });

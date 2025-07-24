@@ -1,5 +1,5 @@
-import { userRoles } from "@/db/schema"
 import { z } from "zod"
+import { userRoles } from "@/db/schema"
 import { SignJWT, jwtVerify } from "jose"
 // import { cookies } from "next/headers"
 
@@ -41,7 +41,7 @@ export async function getUserFromSession(cookies: Pick<Cookies, "get">) {
     const { payload } = await jwtVerify(sessionToken, JWT_SECRET, {
       algorithms: ["HS256"],
     })
-    
+
     const { success, data } = sessionSchema.safeParse(payload)
     return success ? data : null
   } catch (error) {
@@ -54,7 +54,6 @@ export async function updateUserSessionData(
   user: UserSession,
   cookies: Pick<Cookies, "get" | "set">
 ) {
-  // Substituir a sessão atual com uma nova contendo os dados atualizados
   await createUserSession(user, cookies)
 }
 
@@ -63,7 +62,7 @@ export async function createUserSession(
   cookies: Pick<Cookies, "set">
 ) {
   const validatedUser = sessionSchema.parse(user)
-  
+
   // Criar um JWT com os dados do usuário
   const token = await new SignJWT(validatedUser)
     .setProtectedHeader({ alg: "HS256" })
