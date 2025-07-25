@@ -48,13 +48,8 @@ async function _getCurrentUser({
   }
 
   if (withFullUser) {
-    // console.log("Fetching full user data for:", user.id);
     const fullUser = await getUserFromDb(user.id);
-    // console.log("Full user:", fullUser);
-    
-    // This should never happen
     if (!fullUser) throw new Error("User not found in database");
-
     return fullUser;
   }
 
@@ -63,16 +58,9 @@ async function _getCurrentUser({
 
 export const getCurrentUser = cache(_getCurrentUser);
 
-async function getUserFromDb(id: string) {
-  // return await db.query.users.findFirst({
-  //   columns: { id: true, email: true, role: true, name: true, username: true },
-  //   where: eq(users.id, id),
-  // });
-
-  // return await db.query.users.findFirst();
+async function getUserFromDb(id: number) {
   return await db.query.users.findFirst({
     columns: { id: true, email: true, role: true, name: true, username: true },
     where: eq(users.id, id),
-    //where: eq(users.id, 'cc74e56f-494e-488f-b351-b4d378e3a1bf')
   });
 }
