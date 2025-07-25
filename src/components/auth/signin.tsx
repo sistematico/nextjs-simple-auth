@@ -12,13 +12,8 @@ import Link from "next/link";
 type FormData = z.infer<typeof signInSchema>;
 
 export function SignInForm() {
-  const [formData, setFormData] = useState<FormData>({
-    email: "",
-    password: "",
-  });
-  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
-    {}
-  );
+  const [formData, setFormData] = useState<FormData>({ email: "", password: "" });
+  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [submitError, setSubmitError] = useState<string>();
   const [loading, setLoading] = useState(false);
   const [emailTouched, setEmailTouched] = useState(false);
@@ -27,9 +22,7 @@ export function SignInForm() {
     if (!email) return "Email é obrigatório";
     
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return "Email inválido. Exemplo: usuario@dominio.com";
-    }
+    if (!emailRegex.test(email)) return "Email inválido. Exemplo: usuario@dominio.com";
     
     return undefined;
   }
@@ -68,7 +61,7 @@ export function SignInForm() {
     const result = signInSchema.safeParse(formData);
     if (!result.success) {
       const map: typeof errors = {};
-      result.error.errors.forEach((err) => {
+      result.error.issues.forEach((err) => {
         const field = err.path[0] as keyof FormData;
         map[field] = err.message;
       });

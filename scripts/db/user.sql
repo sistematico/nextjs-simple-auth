@@ -1,3 +1,0 @@
-CREATE USER :username WITH ENCRYPTED PASSWORD :'password';
-CREATE DATABASE :dbname WITH OWNER = :username;
-GRANT ALL PRIVILEGES ON DATABASE :dbname TO :username;

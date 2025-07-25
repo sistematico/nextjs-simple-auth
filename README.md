@@ -3,9 +3,9 @@
 <div style="text-align: center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./assets/nextjs/logotype/dark-background/nextjs-logotype-dark-background.png">
-    <img alt="Text changing depending on mode. Light: 'So light!' Dark: 'So dark!'" src="./assets/nextjs/logotype/light-background/nextjs-logotype-light-background.png">
+    <img alt="Next.js Simple Auth" src="./assets/nextjs/logotype/light-background/nextjs-logotype-light-background.png">
   </picture>
-</div>
+</div>  
 
 [![Deploy](https://github.com/sistematico/nextjs-simple-auth/actions/workflows/deploy.yml/badge.svg)](https://github.com/sistematico/nextjs-simple-auth/actions/workflows/deploy.yml)
 
@@ -21,17 +21,10 @@ Instale as dependências:
 bun install
 ```
 
-Inicie o container do Podman:
-
-```bash
-bash scripts/podman.sh
-```
-
 Inicialize o banco de dados:
 
 ```bash
 bun db:push
-bun db:generate
 bun db:seed
 ```
 
@@ -45,21 +38,11 @@ Abra o endereço [http://localhost:3000](http://localhost:3000) no seu navegador
 
 Você pode começar editando o arquivo `src/app/page.tsx`. A página atualiza automaticamente após a edição do arquivo.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
 ## Saiba mais
 
 Para aprender mais sobre o Next.js, leia as seguintes fontes:
 
 - [Documentação do Next.js](https://nextjs.org/docs) - aprenda sobre features da API Next.js.
 - [Aprenda Next.js](https://nextjs.org/learn) - um tutorial interativo do Next.js.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Enviar para o Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 [[en](./README.en.md]|pt]

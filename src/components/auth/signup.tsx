@@ -70,7 +70,7 @@ export function SignUpForm() {
 
     if (!result.success) {
       const zErrors: typeof errors = {};
-      result.error.errors.forEach((err) => {
+      result.error.issues.forEach((err) => {
         const field = err.path[0] as keyof FormData;
         zErrors[field] = err.message;
       });
