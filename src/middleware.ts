@@ -20,19 +20,13 @@ export async function middleware(request: NextRequest) {
 async function middlewareAuth(request: NextRequest) {
   if (privateRoutes.includes(request.nextUrl.pathname)) {
     const user = await getUserFromSession(request.cookies);
-    if (user == null) {
-      return NextResponse.redirect(new URL("/entrar", request.url));
-    }
+    if (!user) return NextResponse.redirect(new URL("/entrar", request.url));
   }
 
   if (adminRoutes.includes(request.nextUrl.pathname)) {
     const user = await getUserFromSession(request.cookies);
-    if (user == null) {
-      return NextResponse.redirect(new URL("/entrar", request.url));
-    }
-    if (user.role !== "admin") {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
+    if (!user) return NextResponse.redirect(new URL("/entrar", request.url));
+    if (user.role !== "admin") return NextResponse.redirect(new URL("/", request.url));
   }
 }
 
