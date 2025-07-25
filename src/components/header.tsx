@@ -9,9 +9,9 @@ import { usePathname } from "next/navigation";
 // Como o componente agora é client-side, precisamos passar o usuário como prop
 interface NavbarProps {
   user: {
-    id: string;
+    id: number;
     email: string;
-    role: string;
+    role: string | null;
     name?: string;
   } | null;
 }
