@@ -14,8 +14,4 @@ export const signUpSchema = z.object({
     .regex(/[A-Z]/, "Senha deve conter pelo menos uma letra maiúscula")
     .regex(/[a-z]/, "Senha deve conter pelo menos uma letra minúscula")
     .regex(/[0-9]/, "Senha deve conter pelo menos um número"),
-  // role: z.enum(["guest","user", "admin"], {
-  //   message: "Selecione um papel válido",
-  // }).default("guest"),
-  // role: z.string().optional().default("guest"),
 });

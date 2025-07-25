@@ -39,14 +39,4 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ${{ secrets.PROJECT_PATH }}
-            bash scripts/deploy.sh
-            #[ ! -f ansible/.vault_pass ] && echo "${{ secrets.VAULT_PASS }}" > ansible/.vault_pass
-            #mkdir ./ansible/roles/postgres/vars/
-            #cat > ansible/roles/postgres/vars/vault.yml << 'EOF'
-            #${{ secrets.VAULT_YML_CONTENT }}
-            #EOF
-            # Ajustar permissões
-            #chmod 600 ansible/.vault_pass
-            #chmod 600 ansible/roles/postgres/vars/vault.yml
-            #chmod 600 ansible/.vault_pass
-            
+            bash scripts/deploy.sh          

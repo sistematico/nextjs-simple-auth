@@ -11,7 +11,7 @@ interface NavbarProps {
   user: {
     id: number;
     email: string;
-    role: string | null;
+    role: string;
     name?: string;
   } | null;
 }

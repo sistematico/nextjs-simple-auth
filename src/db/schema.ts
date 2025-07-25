@@ -12,7 +12,7 @@ export const users = sqliteTable("users", {
   password: text().notNull(),
   salt: text().notNull(),
   // role: text().$type<Role>().default("guest"),
-  role: text().default("guest"),
+  role: text().notNull().default("guest"),
   createdAt: text().notNull().default(sql`(current_timestamp)`),
   updatedAt: text().notNull().$onUpdate(() => new Date().toISOString()),
 });

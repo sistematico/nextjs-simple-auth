@@ -5,7 +5,7 @@ const SESSION_EXPIRATION_SECONDS = 60 * 60 * 24 * 7;
 const COOKIE_SESSION_KEY = "session-token";
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || "default_secret_key_change_in_production");
 // const sessionSchema = z.object({ id: z.int(), role: z.enum(["guest", "user", "admin"]).optional() });
-const sessionSchema = z.object({ id: z.int(), role: z.string().nullable() });
+const sessionSchema = z.object({ id: z.int(), role: z.string() });
 
 type UserSession = z.infer<typeof sessionSchema>
 export type Cookies = {
