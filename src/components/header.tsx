@@ -44,8 +44,8 @@ export function Header({ user }: NavbarProps) {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-foreground/10">
-      <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+      <nav className="container mx-auto">
+        <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
           <Link href="/" className="flex items-center gap-2">
             <Image
               className="dark:invert"
@@ -56,9 +56,8 @@ export function Header({ user }: NavbarProps) {
               priority
             />
           </Link>
-
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-2">
             {user ? (
               <>
                 <span className="text-sm text-foreground/60">
@@ -83,20 +82,19 @@ export function Header({ user }: NavbarProps) {
               <>
                 <Link
                   href="/entrar"
-                  className="text-sm hover:text-foreground/80 transition-colors"
+                  className="rounded-md bg-foreground text-background px-4 py-2"
                 >
                   Entrar
                 </Link>
                 <Link
                   href="/cadastro"
-                  className="rounded-full bg-foreground text-background px-4 py-2 text-sm font-medium transition-colors hover:bg-foreground/90"
+                  className="rounded-md bg-foreground text-background px-4 py-2"
                 >
                   Cadastrar
                 </Link>
               </>
             )}
           </div>
-
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -138,7 +136,6 @@ export function Header({ user }: NavbarProps) {
             )}
           </button>
         </div>
-
         {/* Mobile Menu */}
         <div className={`md:hidden ${isMenuOpen ? "block" : "hidden"}`}>
           <div className="px-2 pt-2 pb-3 space-y-1 bg-background border-t border-foreground/10 mt-2">
@@ -155,7 +152,6 @@ export function Header({ user }: NavbarProps) {
                     Admin
                   </Link>
                 )}
-                {/* <LogOutLink className="block px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors" /> */}
                 <button
                   onClick={handleLogout}
                   className="block px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-100 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors cursor-pointer"

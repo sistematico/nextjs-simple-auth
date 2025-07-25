@@ -1,32 +1,25 @@
 "use server";
 
 import { z } from "zod";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { signInSchema, signUpSchema } from "@/schemas/auth";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { signInSchema, signUpSchema } from "@/schemas/auth";
 import { comparePasswords, generateSalt, hashPassword } from "@/auth/password";
-import { cookies } from "next/headers";
 import { createUserSession, removeUserFromSession } from "@/auth/session";
-
-const messages = {
-  invalidEmailOrPassword: "E-mail e/ou senha inválidos",
-  unableToCreateAccount: "Não foi possível criar a conta",
-  unableToLogIn: "Não foi possível fazer login",
-  accountAlreadyExists: "Já existe uma conta com este e-mail",
-}
 
 export async function signIn(unsafeData: z.infer<typeof signInSchema>) {
   const { success, data } = signInSchema.safeParse(unsafeData);
-  if (!success) return messages.unableToLogIn;
+  if (!success) return "Não foi possível fazer login";
 
   const user = await db.query.users.findFirst({
     columns: { password: true, salt: true, id: true, email: true, role: true },
     where: eq(users.email, data.email),
   });
 
-  if (!user) return messages.invalidEmailOrPassword;
+  if (!user) return "E-mail e/ou senha inválidos";
 
   const isCorrectPassword = await comparePasswords({
     hashedPassword: user.password,
@@ -34,23 +27,17 @@ export async function signIn(unsafeData: z.infer<typeof signInSchema>) {
     salt: user.salt,
   });
 
-  if (!isCorrectPassword) return messages.invalidEmailOrPassword;
-
+  if (!isCorrectPassword) return "E-mail e/ou senha inválidos";
   await createUserSession(user, await cookies());
-
   redirect("/");
 }
 
 export async function signUp(unsafeData: z.infer<typeof signUpSchema>) {
   const { success, data } = signUpSchema.safeParse(unsafeData);
+  if (!success) return "Não foi possível criar a conta";
 
-  if (!success) return messages.unableToCreateAccount;
-
-  const existingUser = await db.query.users.findFirst({
-    where: eq(users.email, data.email),
-  });
-
-  if (existingUser != null) return messages.accountAlreadyExists;
+  const existingUser = await db.query.users.findFirst({ where: eq(users.email, data.email) });
+  if (existingUser) return "Já existe uma conta com este e-mail";
 
   try {
     const salt = generateSalt();
@@ -66,11 +53,11 @@ export async function signUp(unsafeData: z.infer<typeof signUpSchema>) {
       })
       .returning({ id: users.id, role: users.role });
 
-    if (user == null) return messages.unableToCreateAccount;
+    if (user == null) return "Não foi possível criar a conta";
     await createUserSession(user, await cookies());
   } catch (error) {
     console.error("Error creating user:", error);
-    return messages.unableToCreateAccount;
+    return "Não foi possível criar a conta";
   }
 
   redirect("/");
