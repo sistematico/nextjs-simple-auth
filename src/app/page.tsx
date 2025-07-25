@@ -18,8 +18,8 @@ export default async function Home() {
           priority
         />
         <p className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          Este é um exemplo simples de autenticação com Next.js e Auth.js. <br />
-          Para mais informações, consulte a o repositório no Github: <a href="https://github.com/sistematico/nextjs-simple-auth" className="text-blue-500 hover:underline" target="_blank">sistematico/nextjs-simple-auth</a>.
+          Este é um exemplo simples de autenticação com Next.js sem libs externas.<br />
+          Para saber mais, acesse o repositório no Github: <a href="https://github.com/sistematico/nextjs-simple-auth" className="text-blue-500 hover:underline" target="_blank">sistematico/nextjs-simple-auth</a>.
         </p>
         {user ? (
           <Card className="w-full max-w-md">
@@ -39,13 +39,8 @@ export default async function Home() {
               )}
             </CardContent>
           </Card>
-        ) : (
-          <div className="text-center">
-            <p className="mb-4 text-gray-600 dark:text-gray-400">
-              Você não está logado
-            </p>
-          </div>
-        )}
+        )
+      : null}
       </main>
     </div>
   );
