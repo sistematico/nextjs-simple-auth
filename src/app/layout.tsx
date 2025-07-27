@@ -2,7 +2,7 @@ import { Nunito, Geist_Mono } from "next/font/google";
 import { HeaderWrapper } from "@/components/header-wrapper";
 import { Footer } from "@/components/footer";
 import type { Metadata } from "next";
-import "./globals.css";
+import "@/styles/globals.css";
 
 const nunito = Nunito({
   variable: "--font-nunito-sans",

@@ -2,8 +2,8 @@
 
 <div style="text-align: center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/nextjs/logotype/dark-background/nextjs-logotype-dark-background.png">
-    <img alt="Next.js Simple Auth" src="./assets/nextjs/logotype/light-background/nextjs-logotype-light-background.png">
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/nextjs/dark/nextjs-logotype-dark-background.png">
+    <img alt="Next.js Simple Auth" src="./assets/nextjs/light/nextjs-logotype-light-background.png">
   </picture>
 </div>  
 

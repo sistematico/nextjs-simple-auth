@@ -5,8 +5,7 @@ import { signIn } from "@/app/actions";
 import { z } from "zod";
 import { signInSchema } from "@/schemas/auth";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { InputPassword } from "@/components/ui/input-password";
+import { InputPassword } from "@/components/ui/password";
 import Link from "next/link";
 
 type FormData = z.infer<typeof signInSchema>;
@@ -127,20 +126,10 @@ export function SignInForm() {
             Cadastre-se
           </Link>
         </div>
-        <Button type="submit" disabled={loading || !!errors.email || !!errors.password}>
+        <button type="submit" disabled={loading || !!errors.email || !!errors.password}>
           {loading ? "Entrando..." : "Entrar"}
-        </Button>
+        </button>
       </div>
-      {/* <div className="flex gap-4 justify-end">
-        <Button asChild className="underline">
-          <Link href="/cadastro">
-            Criar conta
-          </Link>
-        </Button>
-        <Button type="submit" disabled={loading || !!errors.email}>
-          {loading ? "Entrando..." : "Entrar"}
-        </Button>
-      </div> */}
     </form>
   );
 }

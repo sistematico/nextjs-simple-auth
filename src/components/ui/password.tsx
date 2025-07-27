@@ -2,33 +2,30 @@
 
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
-export function InputPassword() {
+export function InputPassword({ className = "", showStrength = false, ...props }) {
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(prevState => !prevState);
 
   return (
     <div className="relative">
-      <input
-        id="password"
+      <Input
         type={isVisible ? "text" : "password"}
-        className="w-full text-sm text-slate-600 bg-white border border-slate-300 appearance-none rounded-lg ps-3.5 pe-10 py-2.5 outline-none focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
-        placeholder="Enter your password..."
-        aria-label="Password"
-        required
+        className={`pr-10 ${className || ""}`}
+        {...props}
       />
       <button
-        className="absolute inset-y-0 end-0 flex items-center z-20 px-2.5 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus-visible:text-indigo-500 hover:text-indigo-500 transition-colors"
+        className="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus-visible:text-foreground/80 hover:text-foreground/80 transition-colors"
         type="button"
         onClick={toggleVisibility}
-        aria-label={isVisible ? "Hide password" : "Show password"}
+        aria-label={isVisible ? "Ocultar senha" : "Mostrar senha"}
         aria-pressed={isVisible}
-        aria-controls="password"
       >
         {isVisible ? (
-          <EyeOff size={20} aria-hidden="true" />
+          <EyeOff size={18} aria-hidden="true" />
         ) : (
-          <Eye size={20} aria-hidden="true" />
+          <Eye size={18} aria-hidden="true" />
         )}
       </button>
     </div>

@@ -1,24 +1,18 @@
 "use client";
 
+import { z } from "zod";
+import Link from "next/link";
 import { useState } from "react";
 import { signUp } from "@/app/actions";
-import { z } from "zod";
 import { signUpSchema } from "@/schemas/auth";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { PasswordStrength } from "@/components/ui/password-strength";
-import { InputPassword } from "@/components/ui/input-password";
-import Link from "next/link";
+import { InputPassword } from "@/components/ui/password";
 
 type FormData = z.infer<typeof signUpSchema>;
 
 export function SignUpForm() {
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    email: "",
-    password: "",
-  });
-
+  const [formData, setFormData] = useState<FormData>({ name: "", email: "", password: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [submitError, setSubmitError] = useState<string>();
   const [loading, setLoading] = useState(false);
@@ -26,11 +20,7 @@ export function SignUpForm() {
 
   function validateEmail(email: string): string | undefined {
     if (!email) return "Email é obrigatório";
-    
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return "Email inválido. Exemplo: usuario@dominio.com";
-    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "Email inválido. Exemplo: usuario@dominio.com";
     
     return undefined;
   }
@@ -39,7 +29,6 @@ export function SignUpForm() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     
-    // Validação em tempo real para email
     if (name === "email" && emailTouched) {
       const emailError = validateEmail(value);
       setErrors({ ...errors, email: emailError });
@@ -59,7 +48,6 @@ export function SignUpForm() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     
-    // Validar email antes de enviar
     const emailError = validateEmail(formData.email);
     if (emailError) {
       setErrors({ ...errors, email: emailError });
@@ -82,9 +70,7 @@ export function SignUpForm() {
     const serverError = await signUp(result.data);
     setLoading(false);
 
-    if (serverError) {
-      setSubmitError(serverError);
-    }
+    if (serverError) setSubmitError(serverError);
   }
 
   return (
@@ -161,9 +147,9 @@ export function SignUpForm() {
         <Link href="/entrar" className="underline">
           Já tenho conta
         </Link>
-        <Button type="submit" disabled={loading || !!errors.email}>
+        <button type="submit" disabled={loading || !!errors.email}>
           {loading ? "Cadastrando..." : "Cadastrar"}
-        </Button>
+        </button>
       </div>
     </form>
   );
