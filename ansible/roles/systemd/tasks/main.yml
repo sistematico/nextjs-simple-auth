@@ -19,13 +19,13 @@
     sudo /usr/bin/systemctl restart|stop|start|status auth.lucasbrum.dev,
     sem necessidade de senha
   community.general.sudoers:
-    name: auth.lucasbrum.dev
+    name: auth-lucasbrum
     user: nginx
     commands:
-      - /usr/bin/systemctl stop auth.lucasbrum.dev
-      - /usr/bin/systemctl start auth.lucasbrum.dev
-      - /usr/bin/systemctl restart auth.lucasbrum.dev
-      - /usr/bin/systemctl status auth.lucasbrum.dev
+      - /usr/bin/systemctl stop auth.lucasbrum.dev.service
+      - /usr/bin/systemctl start auth.lucasbrum.dev.service
+      - /usr/bin/systemctl restart auth.lucasbrum.dev.service
+      - /usr/bin/systemctl status auth.lucasbrum.dev.service
     nopassword: true
 
 - name: Reiniciar as unidades do systemd
