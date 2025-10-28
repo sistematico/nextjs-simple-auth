@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PROJECT_PATH="$(pwd)"
+PROJECT_PATH="/var/www/auth.paxa.dev"
 TEMP_PATH="/tmp/auth.paxa.dev"
 SERVICE="auth.paxa.dev.service"
 
