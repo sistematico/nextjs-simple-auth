@@ -1,0 +1,12 @@
+[Unit] 
+Description=Next.js Simple Auth
+After=network.target
+
+[Service] 
+User=nginx
+WorkingDirectory=/var/www/auth.lucasbrum.dev
+Environment="NODE_ENV=production" 
+ExecStart=/home/nginx/.bun/bin/bun run start
+
+[Install] 
+WantedBy=multi-user.target

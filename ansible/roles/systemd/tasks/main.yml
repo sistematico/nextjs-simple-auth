@@ -1,0 +1,38 @@
+- name: Alterar as unidades do systemd
+  ansible.builtin.copy:
+    src: "etc/systemd/system/{{ item }}"
+    dest: "/etc/systemd/system/{{ item }}"
+    owner: root
+    group: root
+    mode: "0644"
+  with_items:
+    - auth.lucasbrum.dev.service
+
+- name: Creates /etc/sudoers.d directory
+  ansible.builtin.file:
+    path: /etc/sudoers.d
+    state: directory
+    mode: "0750"
+
+- name: >-
+    Habilitar o usuario nginx para rodar:
+    sudo /usr/bin/systemctl restart|stop|start|status auth.lucasbrum.dev,
+    sem necessidade de senha
+  community.general.sudoers:
+    name: auth-lucasbrum
+    user: nginx
+    commands:
+      - /usr/bin/systemctl stop auth.lucasbrum.dev.service
+      - /usr/bin/systemctl start auth.lucasbrum.dev.service
+      - /usr/bin/systemctl restart auth.lucasbrum.dev.service
+      - /usr/bin/systemctl status auth.lucasbrum.dev.service
+    nopassword: true
+
+- name: Reiniciar as unidades do systemd
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: restarted
+    enabled: true
+    daemon_reload: true
+  with_items:
+    - auth.lucasbrum.dev.service

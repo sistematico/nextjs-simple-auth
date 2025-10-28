@@ -31,7 +31,8 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
-.env*
+.env
+.env.local
 
 # vercel
 .vercel
@@ -39,3 +40,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+drizzle/**
+!drizzle/.gitkeep
+.vault_pass
+.vault_pass
+vault.yml
+
+# database
+*.db
+drizzle/**
+!drizzle/.gitkeep
