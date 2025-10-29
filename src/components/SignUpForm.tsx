@@ -1,7 +1,7 @@
 "use client";
 
-import { z } from "zod";
 import Link from "next/link";
+import { z } from "zod";
 import { useState } from "react";
 import { signUp } from "@/actions";
 import { signUpSchema } from "@/schema/auth";
@@ -64,10 +64,13 @@ export default function SignUpForm() {
     }
 
     setLoading(true);
-    const serverError = await signUp(result.data);
+    const error = await signUp(result.data);
     setLoading(false);
 
-    if (serverError) setSubmitError(serverError);
+    if (error) {
+      setSubmitError(error);
+      return;
+    }
   }
 
   return (

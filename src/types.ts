@@ -6,7 +6,6 @@ export type User = Exclude<
   undefined | null
 >;
 
-export type SessionUser = Exclude<
-  Awaited<ReturnType<typeof getUserFromSession>>,
-  undefined | null
->;
+export type SessionUser = Exclude<Awaited<ReturnType<typeof getUserFromSession>>, undefined | null>;
+
+export type ContextUser = Exclude<Awaited<ReturnType<typeof getUserFromSession>>, undefined | null> | null;

@@ -1,14 +1,21 @@
 "use client";
 
-import { createContext, useContext } from "react";
-import type { User } from "@/types";
+import { createContext, useContext, useState } from "react";
+import type { SessionUser } from "@/types";
 
-export const UserContext = createContext<User | null>(null);
+type UserContextType = {
+  user: SessionUser | null;
+  setUser: (user: SessionUser | null) => void;
+};
 
-export function useUser() {
-  const context = useContext(UserContext);
-  // if (context === null) {
-  //   throw new Error("useUser must be used within a UserContext.Provider");
-  // }
-  return context;
+export const UserContext = createContext<UserContextType | null>(null);
+
+export function UserProvider({ children }: { children: React.ReactNode; }) {
+  const [user, setUser] = useState<SessionUser | null>(null);
+
+  return (
+    <UserContext value={{ user, setUser }}>{children}</UserContext>
+  );
 }
+
+export const useUser = () => useContext(UserContext);

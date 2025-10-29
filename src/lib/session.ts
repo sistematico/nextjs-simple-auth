@@ -3,7 +3,6 @@
 import { z } from "zod";
 import { SignJWT, jwtVerify } from "jose";
 import { sessionSchema } from "@/schema/auth";
-import { cookies as nextCookies } from "next/headers";
 
 const SESSION_EXPIRATION_SECONDS = 60 * 60 * 24 * 7;
 const COOKIE_SESSION_KEY = "session-token";
@@ -26,7 +25,7 @@ export type Cookies = {
   delete: (key: string) => void;
 };
 
-export async function getUserFromSession(cookies: Pick<Cookies, "get">) {
+export async function getUserFromSession(cookies: Pick<Cookies, "get" | "delete">) {
   const sessionToken = cookies.get(COOKIE_SESSION_KEY)?.value;
   if (!sessionToken) return null;
 
@@ -37,7 +36,7 @@ export async function getUserFromSession(cookies: Pick<Cookies, "get">) {
     const { success, data } = sessionSchema.safeParse(payload);
     return success ? data : null;
   } catch {
-    (await nextCookies()).delete(COOKIE_SESSION_KEY);
+    cookies.delete(COOKIE_SESSION_KEY);
     return null;
   }
 }
@@ -67,7 +66,7 @@ export async function createUserSession(
 }
 
 export async function updateUserSessionExpiration(
-  cookies: Pick<Cookies, "get" | "set">,
+  cookies: Pick<Cookies, "get" | "set" | "delete">,
 ) {
   const user = await getUserFromSession(cookies);
   if (user) await createUserSession(user, cookies);

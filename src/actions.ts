@@ -14,6 +14,7 @@ export async function signIn(unsafeData: z.infer<typeof signInSchema>) {
   const { success, data } = signInSchema.safeParse(unsafeData);
   if (!success) return "Não foi possível fazer login";
 
+  try {
   const user = await db.query.users.findFirst({
     columns: { password: true, salt: true, id: true, email: true, role: true },
     where: eq(users.email, data.email),
@@ -28,8 +29,14 @@ export async function signIn(unsafeData: z.infer<typeof signInSchema>) {
   });
 
   if (!isCorrectPassword) return "E-mail e/ou senha inválidos";
+  
   await createUserSession(user, await cookies());
-  redirect("/");
+  } catch (error) {
+    console.error("Error during sign-in:", error);
+    return "Não foi possível fazer login";
+  } finally {
+    redirect("/");
+  }
 }
 
 export async function signUp(unsafeData: z.infer<typeof signUpSchema>) {
@@ -54,16 +61,16 @@ export async function signUp(unsafeData: z.infer<typeof signUpSchema>) {
       .returning({ id: users.id, role: users.role });
 
     if (user == null) return "Não foi possível criar a conta";
+    
     await createUserSession(user, await cookies());
   } catch (error) {
     console.error("Error creating user:", error);
     return "Não foi possível criar a conta";
+  } finally {
+    redirect("/");
   }
-
-  redirect("/");
 }
 
 export async function logOut() {
   await removeUserFromSession(await cookies());
-  redirect("/");
 }

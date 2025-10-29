@@ -1,3 +1,5 @@
+"use server";
+
 import { cookies } from "next/headers";
 import { getUserFromSession } from "@/lib/session";
 import { cache } from "react";
@@ -34,7 +36,7 @@ async function _getCurrentUser({
   const user = await getUserFromSession(await cookies());
 
   if (user == null) {
-    if (redirectIfNotFound) return redirect("/sign-in");
+    if (redirectIfNotFound) return redirect("/signin");
     return null;
   }
 

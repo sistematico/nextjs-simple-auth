@@ -1,10 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { z } from "zod";
 import { useState } from "react";
 import { signIn } from "@/actions";
 import { signInSchema } from "@/schema/auth";
-import Link from "next/link";
 
 type FormData = z.infer<typeof signInSchema>;
 
@@ -70,7 +70,10 @@ export default function SignInForm() {
     const error = await signIn(result.data);
     setLoading(false);
 
-    if (error) setSubmitError(error);
+    if (error) {
+      setSubmitError(error);
+      return;
+    }
   }
 
   return (
