@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "bun --bun next dev",
+    "build": "bun --bun next build",
+    "start": "bun --bun next start",
     "lint": "biome check",
-    "format": "biome format --write"
+    "format": "biome format --write",
+    "push": "bunx drizzle-kit push"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.1",
