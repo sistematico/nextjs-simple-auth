@@ -1,6 +1,6 @@
 import { SignupFormSchema, FormState } from "@/schemas/auth";
 
-export async function signup(state: FormState, formData: FormData) {
+export async function signup(_prevState: FormState, formData: FormData) {
   // Validate form fields
   const validatedFields = SignupFormSchema.safeParse({
     name: formData.get("name"),
