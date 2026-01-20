@@ -15,15 +15,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="h-screen">
-          <nav className="sticky top-0">
-            <div className="flex gap-3 p-4 bg-gray-200">
+        <div className="flex flex-col min-h-screen">
+          <header className="sticky z-50 bg-gray-300 top-0 p-4">
+            <nav>
               <Link href="/">Home</Link>
               <Link href="/entrar">Entrar</Link>
               <Link href="/cadastro">Cadastro</Link>
-            </div>
-          </nav>
-          {children}
+            </nav>
+          </header>
+          <main className="flex-1 p-4">{children}</main>
+          <footer className="sticky z-50 bg-gray-300 bottom-0 p-4">
+            footer contents
+          </footer>
         </div>
       </body>
     </html>
