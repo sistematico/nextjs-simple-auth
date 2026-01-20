@@ -11,6 +11,7 @@
     "push": "bunx drizzle-kit push"
   },
   "dependencies": {
+    "better-sqlite3": "^12.6.2",
     "drizzle-orm": "^0.45.1",
     "jose": "^6.1.3",
     "next": "16.1.3",
@@ -34,6 +35,8 @@
     "unrs-resolver"
   ],
   "trustedDependencies": [
+    "better-sqlite3",
+    "esbuild",
     "sharp",
     "unrs-resolver"
   ]
