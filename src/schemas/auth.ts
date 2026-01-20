@@ -2,7 +2,7 @@ import * as z from "zod";
 
 export const LoginFormSchema = z.object({
   email: z.email(),
-  password: z.string().min(8),
+  password: z.string().min(8)
 });
 
 export const SignupFormSchema = z.object({
@@ -11,7 +11,7 @@ export const SignupFormSchema = z.object({
   password: z
     .string()
     .min(8)
-    .regex(/[a-zA-Z]/),
+    .regex(/[a-zA-Z]/)
 });
 
 // export const SignupFormSchema = z.object({

@@ -20,5 +20,7 @@ export const users = sqliteTable("users", {
   salt: text().notNull(),
   role: text().notNull().default("user"), // user, admin
   createdAt: text().notNull().default(sql`(current_timestamp)`),
-  updatedAt: text().notNull().$onUpdate(() => new Date().toISOString())
+  updatedAt: text()
+    .notNull()
+    .$onUpdate(() => new Date().toISOString())
 });
