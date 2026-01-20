@@ -8,7 +8,10 @@ export const LoginFormSchema = z.object({
 export const SignupFormSchema = z.object({
   name: z.string().min(2).trim(),
   email: z.email().trim(),
-  password: z.string().min(8).regex(/[a-zA-Z]/),
+  password: z
+    .string()
+    .min(8)
+    .regex(/[a-zA-Z]/),
 });
 
 // export const SignupFormSchema = z.object({
