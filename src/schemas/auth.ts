@@ -41,3 +41,8 @@ export type FormState =
       message?: string;
     }
   | undefined;
+
+export type SessionPayload = {
+  sessionId: number;
+  expiresAt: Date;
+};

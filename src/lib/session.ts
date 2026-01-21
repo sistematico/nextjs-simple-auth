@@ -4,8 +4,10 @@ import { cookies } from "next/headers";
 import { SignJWT, jwtVerify } from "jose";
 import { SessionPayload } from "@/schemas/auth";
 import { db } from "@/db";
+import { sessions } from "@/db/schema";
 
 const secretKey = process.env.SESSION_SECRET;
+if (!secretKey) throw new Error("SESSION_SECRET is not defined")
 const encodedKey = new TextEncoder().encode(secretKey);
 
 export async function encrypt(payload: SessionPayload) {
@@ -45,7 +47,7 @@ export async function createSession(id: number) {
     .insert(sessions)
     .values({
       userId: id,
-      expiresAt
+      expiresAt: expiresAt.toISOString()
     })
     // Return the session ID
     .returning({ id: sessions.id });

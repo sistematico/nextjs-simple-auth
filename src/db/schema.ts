@@ -24,3 +24,13 @@ export const users = sqliteTable("users", {
     .notNull()
     .$onUpdate(() => new Date().toISOString())
 });
+
+export const sessions = sqliteTable("sessions", {
+  id: int().primaryKey({ autoIncrement: true }),
+  userId: int().notNull(),
+  expiresAt: text().notNull(),
+  createdAt: text().notNull().default(sql`(current_timestamp)`),
+  updatedAt: text()
+    .notNull()
+    .$onUpdate(() => new Date().toISOString())
+});
