@@ -1,11 +1,12 @@
 "use server";
 
+import { z } from "zod";
 import { SignupFormSchema, LoginFormSchema, FormState } from "@/schemas/auth";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { randomBytes, scryptSync, timingSafeEqual } from "crypto";
-import { createSession } from "@/lib/session"; 
+import { createSession } from "@/lib/session";
 
 export async function signup(_prevState: FormState, formData: FormData) {
   // Validate form fields
@@ -16,12 +17,14 @@ export async function signup(_prevState: FormState, formData: FormData) {
   });
 
   if (!validated.success) {
-    return {
-      errors: validated.error.flatten().fieldErrors
-    };
+    const tree = z.treeifyError(validated.error);
+    const fieldErrors = Object.fromEntries(
+      Object.entries(tree.properties ?? {}).map(([k, v]) => [k, v?.errors ?? []])
+    );
+    return { errors: fieldErrors };
   }
 
-  const { name, email, password } = validated.data;
+  const { name, email, password } = validated.data; 
 
   // Check if user already exists
   const existing = await db.select().from(users).where(eq(users.email, email));
@@ -67,9 +70,11 @@ export async function login(_prevState: FormState, formData: FormData) {
   });
 
   if (!validated.success) {
-    return {
-      errors: validated.error.flatten().fieldErrors
-    };
+    const tree = z.treeifyError(validated.error);
+    const fieldErrors = Object.fromEntries(
+      Object.entries(tree.properties ?? {}).map(([k, v]) => [k, v?.errors ?? []])
+    );
+    return { errors: fieldErrors };
   }
 
   const { email, password } = validated.data;

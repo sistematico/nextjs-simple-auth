@@ -33,7 +33,7 @@ export default function SignupForm() {
           <div className="mt-1 text-sm text-red-600">
             <p>Password must:</p>
             <ul className="list-disc ml-5">
-              {state.errors.password.map((error) => (
+              {state.errors.password.map((error: string) => (
                 <li key={error}>{error}</li>
               ))}
             </ul>

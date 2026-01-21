@@ -7,7 +7,7 @@ import { db } from "@/db";
 import { sessions } from "@/db/schema";
 
 const secretKey = process.env.SESSION_SECRET;
-if (!secretKey) throw new Error("SESSION_SECRET is not defined")
+if (!secretKey) throw new Error("SESSION_SECRET is not defined");
 const encodedKey = new TextEncoder().encode(secretKey);
 
 export async function encrypt(payload: SessionPayload) {
