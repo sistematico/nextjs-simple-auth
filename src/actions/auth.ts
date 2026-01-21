@@ -18,13 +18,11 @@ export async function signup(_prevState: FormState, formData: FormData) {
 
   if (!validated.success) {
     const tree = z.treeifyError(validated.error);
-    const fieldErrors = Object.fromEntries(
-      Object.entries(tree.properties ?? {}).map(([k, v]) => [k, v?.errors ?? []])
-    );
+    const fieldErrors = Object.fromEntries(Object.entries(tree.properties ?? {}).map(([k, v]) => [k, v?.errors ?? []]));
     return { errors: fieldErrors };
   }
 
-  const { name, email, password } = validated.data; 
+  const { name, email, password } = validated.data;
 
   // Check if user already exists
   const existing = await db.select().from(users).where(eq(users.email, email));
@@ -71,9 +69,7 @@ export async function login(_prevState: FormState, formData: FormData) {
 
   if (!validated.success) {
     const tree = z.treeifyError(validated.error);
-    const fieldErrors = Object.fromEntries(
-      Object.entries(tree.properties ?? {}).map(([k, v]) => [k, v?.errors ?? []])
-    );
+    const fieldErrors = Object.fromEntries(Object.entries(tree.properties ?? {}).map(([k, v]) => [k, v?.errors ?? []]));
     return { errors: fieldErrors };
   }
 
