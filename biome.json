@@ -20,6 +20,13 @@
       "recommended": true,
       "suspicious": {
         "noUnknownAtRules": "off"
+      },
+      "style": {
+        "useImportType": "off",
+        "noNonNullAssertion": "off"
+      },
+      "a11y": {
+        "useButtonType": "off"
       }
     },
     "domains": {
