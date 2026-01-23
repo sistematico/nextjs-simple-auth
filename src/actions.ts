@@ -58,7 +58,12 @@ export async function signUp(unsafeData: z.infer<typeof signUpSchema>) {
       password: hashedPassword,
       salt,
     })
-    .returning({ id: users.id, email: users.email, name: users.name, role: users.role });
+    .returning({
+      id: users.id,
+      email: users.email,
+      name: users.name,
+      role: users.role,
+    });
 
   if (!user) return "Não foi possível criar a conta";
 

@@ -9,17 +9,15 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType>({ user: null });
 
-export function AuthProvider({ 
+export function AuthProvider({
   children,
   user,
-}: { 
+}: {
   children: React.ReactNode;
   user: PublicUser | null;
 }) {
   return (
-    <AuthContext.Provider value={{ user }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
   );
 }
 

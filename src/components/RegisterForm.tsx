@@ -13,14 +13,14 @@ export default function RegisterForm() {
     if (!formRef.current) return;
     setLoading(true);
     setError(null);
-    
+
     const fd = new FormData(formRef.current);
     const name = (fd.get("name") as string) || "";
     const email = (fd.get("email") as string) || "";
     const password = (fd.get("password") as string) || "";
-    
+
     const result = await signUp({ name, email, password });
-    
+
     if (result) {
       setError(result);
       setLoading(false);
@@ -29,12 +29,20 @@ export default function RegisterForm() {
   }
 
   return (
-    <form ref={formRef} onSubmit={onSubmit} className="flex flex-col gap-4 max-w-md">
+    <form
+      ref={formRef}
+      onSubmit={onSubmit}
+      className="flex flex-col gap-4 max-w-md"
+    >
       {error && (
-        <div className="text-red-600 font-semibold p-3 bg-red-50 rounded">{error}</div>
+        <div className="text-red-600 font-semibold p-3 bg-red-50 rounded">
+          {error}
+        </div>
       )}
       <div>
-        <label htmlFor="name" className="block text-sm font-medium mb-1">Nome</label>
+        <label htmlFor="name" className="block text-sm font-medium mb-1">
+          Nome
+        </label>
         <input
           id="name"
           name="name"
@@ -45,7 +53,9 @@ export default function RegisterForm() {
         />
       </div>
       <div>
-        <label htmlFor="email" className="block text-sm font-medium mb-1">Email</label>
+        <label htmlFor="email" className="block text-sm font-medium mb-1">
+          Email
+        </label>
         <input
           id="email"
           name="email"
@@ -56,7 +66,9 @@ export default function RegisterForm() {
         />
       </div>
       <div>
-        <label htmlFor="password" className="block text-sm font-medium mb-1">Senha</label>
+        <label htmlFor="password" className="block text-sm font-medium mb-1">
+          Senha
+        </label>
         <input
           id="password"
           name="password"

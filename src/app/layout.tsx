@@ -22,7 +22,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/nextjs_logo_icon.svg" type="image/xml+svg" sizes="any" />
+        <link
+          rel="icon"
+          href="/nextjs_logo_icon.svg"
+          type="image/xml+svg"
+          sizes="any"
+        />
       </head>
       <body>
         <AuthProvider user={user}>

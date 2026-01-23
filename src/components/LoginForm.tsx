@@ -13,13 +13,13 @@ export default function LoginForm() {
     if (!formRef.current) return;
     setLoading(true);
     setError(null);
-    
+
     const fd = new FormData(formRef.current);
     const email = (fd.get("email") as string) || "";
     const password = (fd.get("password") as string) || "";
-    
+
     const result = await signIn({ email, password });
-    
+
     if (result) {
       setError(result);
       setLoading(false);
@@ -28,12 +28,20 @@ export default function LoginForm() {
   }
 
   return (
-    <form ref={formRef} onSubmit={onSubmit} className="flex flex-col gap-4 max-w-md">
+    <form
+      ref={formRef}
+      onSubmit={onSubmit}
+      className="flex flex-col gap-4 max-w-md"
+    >
       {error && (
-        <div className="text-red-600 font-semibold p-3 bg-red-50 rounded">{error}</div>
+        <div className="text-red-600 font-semibold p-3 bg-red-50 rounded">
+          {error}
+        </div>
       )}
       <div>
-        <label htmlFor="email" className="block text-sm font-medium mb-1">Email</label>
+        <label htmlFor="email" className="block text-sm font-medium mb-1">
+          Email
+        </label>
         <input
           id="email"
           name="email"
@@ -44,7 +52,9 @@ export default function LoginForm() {
         />
       </div>
       <div>
-        <label htmlFor="password" className="block text-sm font-medium mb-1">Senha</label>
+        <label htmlFor="password" className="block text-sm font-medium mb-1">
+          Senha
+        </label>
         <input
           id="password"
           name="password"
