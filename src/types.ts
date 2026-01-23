@@ -1,7 +1,15 @@
-import { z } from "zod";
-import { sessionSchema } from "@/schema/auth";
+import { users } from "@/db/schema";
+import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
 
-export type UserSession = z.infer<typeof sessionSchema>;
+export type User = InferSelectModel<typeof users>;
+export type NewUser = InferInsertModel<typeof users>;
+
+export type PublicUser = {
+  id: number;
+  email: string;
+  name: string;
+  role: string;
+};
 
 export type Cookies = {
   set: (
