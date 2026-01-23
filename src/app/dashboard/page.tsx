@@ -20,21 +20,71 @@ export default async function DashboardPage() {
         <table style={{ borderCollapse: "collapse", width: "100%" }}>
           <thead>
             <tr>
-              <th style={{ textAlign: "left", padding: 8, borderBottom: "1px solid #ddd" }}>ID</th>
-              <th style={{ textAlign: "left", padding: 8, borderBottom: "1px solid #ddd" }}>Nome</th>
-              <th style={{ textAlign: "left", padding: 8, borderBottom: "1px solid #ddd" }}>Email</th>
-              <th style={{ textAlign: "left", padding: 8, borderBottom: "1px solid #ddd" }}>Role</th>
-              <th style={{ textAlign: "left", padding: 8, borderBottom: "1px solid #ddd" }}>Criado em</th>
+              <th
+                style={{
+                  textAlign: "left",
+                  padding: 8,
+                  borderBottom: "1px solid #ddd",
+                }}
+              >
+                ID
+              </th>
+              <th
+                style={{
+                  textAlign: "left",
+                  padding: 8,
+                  borderBottom: "1px solid #ddd",
+                }}
+              >
+                Nome
+              </th>
+              <th
+                style={{
+                  textAlign: "left",
+                  padding: 8,
+                  borderBottom: "1px solid #ddd",
+                }}
+              >
+                Email
+              </th>
+              <th
+                style={{
+                  textAlign: "left",
+                  padding: 8,
+                  borderBottom: "1px solid #ddd",
+                }}
+              >
+                Role
+              </th>
+              <th
+                style={{
+                  textAlign: "left",
+                  padding: 8,
+                  borderBottom: "1px solid #ddd",
+                }}
+              >
+                Criado em
+              </th>
             </tr>
           </thead>
           <tbody>
             {users.map((u) => (
               <tr key={u.id}>
-                <td style={{ padding: 8, borderBottom: "1px solid #eee" }}>{u.id}</td>
-                <td style={{ padding: 8, borderBottom: "1px solid #eee" }}>{u.name ?? "-"}</td>
-                <td style={{ padding: 8, borderBottom: "1px solid #eee" }}>{u.email}</td>
-                <td style={{ padding: 8, borderBottom: "1px solid #eee" }}>{u.role}</td>
-                <td style={{ padding: 8, borderBottom: "1px solid #eee" }}>{u.createdAt}</td>
+                <td style={{ padding: 8, borderBottom: "1px solid #eee" }}>
+                  {u.id}
+                </td>
+                <td style={{ padding: 8, borderBottom: "1px solid #eee" }}>
+                  {u.name ?? "-"}
+                </td>
+                <td style={{ padding: 8, borderBottom: "1px solid #eee" }}>
+                  {u.email}
+                </td>
+                <td style={{ padding: 8, borderBottom: "1px solid #eee" }}>
+                  {u.role}
+                </td>
+                <td style={{ padding: 8, borderBottom: "1px solid #eee" }}>
+                  {u.createdAt}
+                </td>
               </tr>
             ))}
             {users.length === 0 && (

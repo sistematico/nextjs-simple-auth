@@ -6,7 +6,12 @@ import type { Cookies } from "@/types";
 const secret = new TextEncoder().encode(process.env.SESSION_SECRET!);
 
 type SessionPayload = {
-  user?: { id?: number; email?: FormDataEntryValue | string | null; name?: string | null; role?: string | null };
+  user?: {
+    id?: number;
+    email?: FormDataEntryValue | string | null;
+    name?: string | null;
+    role?: string | null;
+  };
   expires?: number;
   [key: string]: unknown;
 };
@@ -30,10 +35,25 @@ export async function decrypt(input: string): Promise<SessionPayload> {
  * Create and persist a session for a user.
  * Accepts either a user object or form data (for compatibility with existing API routes).
  */
-export async function login(formDataOrUser: FormData | { id?: number; email?: string | FormDataEntryValue | null; name?: string | null; role?: string | null }, cookieStore?: Pick<Cookies, "set">) {
+export async function login(
+  formDataOrUser:
+    | FormData
+    | {
+        id?: number;
+        email?: string | FormDataEntryValue | null;
+        name?: string | null;
+        role?: string | null;
+      },
+  cookieStore?: Pick<Cookies, "set">,
+) {
   const cookie = cookieStore ?? cookies();
 
-  let user: { id?: number; email?: string | null; name?: string | null; role?: string | null };
+  let user: {
+    id?: number;
+    email?: string | null;
+    name?: string | null;
+    role?: string | null;
+  };
 
   if (formDataOrUser instanceof FormData) {
     user = {
@@ -51,7 +71,12 @@ export async function login(formDataOrUser: FormData | { id?: number; email?: st
     const rawEmail = candidate.email;
     user = {
       id: candidate.id,
-      email: typeof rawEmail === "string" ? rawEmail : rawEmail ? String(rawEmail) : null,
+      email:
+        typeof rawEmail === "string"
+          ? rawEmail
+          : rawEmail
+            ? String(rawEmail)
+            : null,
       name: candidate.name ?? null,
       role: candidate.role ?? null,
     };
@@ -61,8 +86,17 @@ export async function login(formDataOrUser: FormData | { id?: number; email?: st
   const session = await encrypt({ user, expires });
 
   // cookie can be either our Cookies type or the next/headers cookies return - narrow with a local shape
-  const cookieObj = (cookie as unknown) as {
-    set?: (key: string, value: string, options?: { secure?: boolean; httpOnly?: boolean; sameSite?: string; expires?: number }) => void;
+  const cookieObj = cookie as unknown as {
+    set?: (
+      key: string,
+      value: string,
+      options?: {
+        secure?: boolean;
+        httpOnly?: boolean;
+        sameSite?: string;
+        expires?: number;
+      },
+    ) => void;
   };
   cookieObj.set?.("session", session, {
     secure: true,
@@ -74,12 +108,16 @@ export async function login(formDataOrUser: FormData | { id?: number; email?: st
 
 export async function logout(cookieStore?: Pick<Cookies, "set">) {
   const cookie = cookieStore ?? cookies();
-  const obj = (cookie as unknown) as { set?: (k: string, v: string, o?: { expires?: number }) => void };
+  const obj = cookie as unknown as {
+    set?: (k: string, v: string, o?: { expires?: number }) => void;
+  };
   obj.set?.("session", "", { expires: 0 });
 }
 
 export async function getSession(): Promise<SessionPayload | null> {
-  const cookieStore = (cookies() as unknown) as { get?: (key: string) => { name: string; value: string } | undefined };
+  const cookieStore = cookies() as unknown as {
+    get?: (key: string) => { name: string; value: string } | undefined;
+  };
   const session = cookieStore.get?.("session")?.value;
   if (!session) return null;
   return await decrypt(session);

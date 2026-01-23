@@ -3,7 +3,7 @@ import LoginForm from "@/components/LoginForm";
 
 export default async function Page() {
   const session = await getSession();
-  
+
   return (
     <section className="max-w-md mx-auto">
       <LoginForm />

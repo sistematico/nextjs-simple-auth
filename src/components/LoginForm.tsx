@@ -25,23 +25,19 @@ export default function LoginForm() {
   }
 
   return (
-    <form 
-      ref={formRef} 
-      onSubmit={onSubmit}
-      className="flex flex-col gap-4"
-    >
+    <form ref={formRef} onSubmit={onSubmit} className="flex flex-col gap-4">
       <div>
-        <input 
-          name="email" 
-          type="email" 
-          placeholder="Email" 
+        <input
+          name="email"
+          type="email"
+          placeholder="Email"
           className="rounded border-2 border-black/70"
-          required 
+          required
         />
       </div>
       <div>
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           className="rounded border-2 border-black/70"
           disabled={loading}
         >
