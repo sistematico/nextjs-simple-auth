@@ -28,7 +28,11 @@ export default function RegisterForm() {
     <form ref={formRef} onSubmit={onSubmit}>
       <input name="email" type="email" placeholder="Email" required />
       <br />
-      <button type="submit" disabled={loading}>
+      <button 
+        type="submit" 
+        className="rounded border-2 border-black/70"
+        disabled={loading}
+      >
         {loading ? "Registering..." : "Register"}
       </button>
     </form>

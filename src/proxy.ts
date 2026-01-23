@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { updateSession } from "./lib/session";
+import { getSession, updateSession } from "./lib/session";
+
+const privateRoutes = ["/dashboard"];
 
 export async function proxy(request: NextRequest) {
+  if (privateRoutes.includes(request.nextUrl.pathname)) {
+    const user = await getSession();
+    if (!user) return NextResponse.redirect(new URL("/login", request.url));
+  }
+
   try {
     const res = await updateSession(request);
     if (res) return res;
